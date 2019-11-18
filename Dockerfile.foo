@@ -1,0 +1,17 @@
+ARG DOCKER_WORKSPACE_IMAGE
+
+FROM $DOCKER_WORKSPACE_IMAGE as builder
+
+COPY cmd ./cmd
+COPY internal ./internal
+RUN go build -o /go/bin/foo ./cmd/foo
+
+FROM alpine:3.10
+
+RUN apk add --update --no-cache \
+    ca-certificates && \
+  rm -rf /var/cache/apk/*
+
+COPY --from=builder /go/bin/foo /usr/local/bin/foo
+
+ENTRYPOINT ["/usr/local/bin/foo"]
