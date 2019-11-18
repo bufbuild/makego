@@ -1,7 +1,11 @@
 package main
 
-import "github.com/bufbuild/makego/internal/foo"
+import (
+	"fmt"
+
+	"github.com/bufbuild/makego/internal/foo"
+)
 
 func main() {
-	foo.Bar()
+	fmt.Println(foo.Bar())
 }
