@@ -136,6 +136,7 @@ copytomakego:
 	$(foreach makego_file,$(subst $(MAKEGO)/,,$(shell find $(MAKEGO) -type f)),mkdir -p $(TMP)/makego/make/go/$(dir $(makego_file)); cp $(MAKEGO)/$(makego_file) $(TMP)/makego/make/go/$(makego_file); )
 	@cd $(TMP)/makego; git status; git diff
 	@echo cd $(TMP)/makego
+	@echo git diff
 	@echo git push origin master
 	@echo cd -
 
