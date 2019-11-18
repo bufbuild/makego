@@ -14,6 +14,9 @@ installed, and Docker installed if Docker is used. All other dependences (except
 need to document that most systems will have, such as `bash`, `curl`, and `git`) are installed by makego
 automatically and cached on a per-project basis, including all Golang module downloads.
 
+Makego allows updating from this master (or you forked master) automatically, only copying the files
+you need.
+
 ## Notice
 
 Makego is primarily OSS as we use it in our OSS projects. Makego will likely have many breaking
