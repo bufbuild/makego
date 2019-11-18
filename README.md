@@ -73,7 +73,7 @@ Other files of relevance:
   generally should not be edited, however.
 - [LICENSE](LICENSE) - Our license. Replace with your own license.
 - [Makefile](Makefile) - The main Makefile. See below for setup.
-- [README.md]
+- [README.md](README.md) - This readme.
 - `.env` - This directory contains your individual environment, if you want. You can back this
   up to with `make envbackup` and restore with `make envrestore`. The special file `.env/env.sh`
   will be included with `make direnv`, which direnv calls via [.envrc](.envrc).
@@ -182,7 +182,7 @@ We are not documenting all development commands, however some important ones of 
 - `make dockermakeworkspace` - This will run `make all` by default inside the Docker container
   defined by `Docker.workspace`. You can edit the Makefile target with `DOCKERMAKETARGET`.
 - `make dockerbuild` - Build all Docker images defined by `DOCKER_BINS`.
-- `make updatemakego` - Update from makego master. This wil
+- `make updatemakego` - Update from makego master.
 
 ## Variables
 
