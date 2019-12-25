@@ -11,6 +11,8 @@ $(call _assert_var,GOBIN)
 # https://github.com/envoyproxy/protoc-gen-validate/commits/master 20191111
 PROTOC_GEN_VALIDATE_VERSION ?= de8fa833aeb04a6bf84c313e39898c22f381fb05
 
+GO_GET_PKGS := $(GO_GET_PKGS) github.com/envoyproxy/protoc-gen-validate@$(PROTOC_GEN_VALIDATE_VERSION)
+
 PROTOC_GEN_VALIDATE := $(CACHE_VERSIONS)/protoc-gen-validate/$(PROTOC_GEN_VALIDATE_VERSION)
 $(PROTOC_GEN_VALIDATE):
 	@rm -f $(GOBIN)/protoc-gen-validate
