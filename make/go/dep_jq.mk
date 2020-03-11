@@ -9,7 +9,7 @@ $(call _assert_var,CACHE_VERSIONS)
 $(call _assert_var,CACHE_BIN)
 
 # Settable
-# https://stedolan.github.io/jq/download
+# https://stedolan.github.io/jq/download checked 20200311
 JQ_VERSION ?= 1.6
 
 ifeq ($(UNAME_ARCH),x86_64)
