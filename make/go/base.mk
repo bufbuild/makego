@@ -35,6 +35,9 @@ CACHE_GO := $(CACHE)/go
 # Runtime MAKEGOALL
 
 export GO111MODULE := on
+ifdef GOPROXY
+export GOPROXY := $(GOPROXY)
+endif
 ifdef GOPRIVATE
 export GOPRIVATE := $(GOPRIVATE),$(GO_MODULE)
 else
