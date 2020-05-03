@@ -16,7 +16,7 @@ $(call _assert_var,ADDLICENSE)
 
 .PHONY: addlicense
 addlicense: __addlicense_files $(ADDLICENSE)
-	$(foreach addlicense_file,$(sort $(ADDLICENSE_FILES)),addlicense -c "$(COPYRIGHT_OWNER)" -l "$(LICENSE_TYPE)" -y "$(COPYRIGHT_YEAR)" $(addlicense_file) || exit 1;)
+	@$(foreach addlicense_file,$(sort $(ADDLICENSE_FILES)),addlicense -c "$(COPYRIGHT_OWNER)" -l "$(LICENSE_TYPE)" -y "$(COPYRIGHT_YEAR)" $(addlicense_file) || exit 1;)
 
 licensegenerate:: addlicense
 
