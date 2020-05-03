@@ -16,4 +16,4 @@ $(call _assert_var,ADDLICENSE)
 addlicense: $(ADDLICENSE)
 	addlicense -c "$(COPYRIGHT_OWNER)" -l "$(LICENSE_TYPE)" -y "$(COPYRIGHT_YEAR)" .
 
-pregenerate:: addlicense
+licensegenerate:: addlicense
