@@ -4,7 +4,6 @@
 $(call _assert_var,MAKEGO)
 $(call _conditional_include,$(MAKEGO)/base.mk)
 $(call _conditional_include,$(MAKEGO)/dep_addlicense.mk)
-$(call _conditional_include,$(MAKEGO)/dep_protoc_gen_go.mk)
 # Must be set
 $(call _assert_var,COPYRIGHT_OWNER)
 # Must be set
