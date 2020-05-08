@@ -137,9 +137,9 @@ those files in `make/hello/all.mk`. When you're sure you are done, run `make upd
 to delete unnecessary files.
 
 ```bash
-# DESTRUCTIVE=1 is just for protection
-# If you later want to restore all the files, you can do so by adding MAKEGOALL=1 to this command
-make updatemakego DESTRUCTIVE=1
+# CONFIRM=1 is just for protection
+# If you later want to restore all the files, you can do so by adding ALL=1 to this command
+make updatemakego CONFIRM=1
 ```
 
 Then, delete everything in this readme except potentially the badge links at the top (but if
@@ -249,9 +249,9 @@ project-specific settings and not intended to be set on the command line.
 
 These variables are meant to be set when invoking make targets on the command line.
 
-- `DESTRUCTIVE` - This is required to be set when running `make updatemakego`. This is to protect
+- `CONFIRM` - This is required to be set when running `make updatemakego`. This is to protect
   against updating when not intended.
-- `MAKEGOALL` - This results in all makego files being downloaded when running `make updatemakego`
+- `ALL` - This results in all makego files being downloaded when running `make updatemakego`
   instead of just the ones that you current have included.
 - `DOCKERMAKETARGET` - This changes the recursive make target for `make dockermakeworkspace` from
   `all` to this value.
