@@ -37,3 +37,6 @@ $(PROTOC):
 	@touch $(PROTOC)
 
 dockerdeps:: $(PROTOC)
+
+.PHONY: protocpre
+protocpre::

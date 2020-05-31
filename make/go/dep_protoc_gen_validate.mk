@@ -13,16 +13,21 @@ PROTOC_GEN_VALIDATE_VERSION ?= 478e95eb5ebe9afa11d767b6ce53dec79b6cc8c4
 
 GO_GET_PKGS := $(GO_GET_PKGS) github.com/envoyproxy/protoc-gen-validate@$(PROTOC_GEN_VALIDATE_VERSION)
 
-PROTOC_GEN_VALIDATE := $(CACHE_VERSIONS)/protoc-gen-validate/$(PROTOC_GEN_VALIDATE_VERSION)
-$(PROTOC_GEN_VALIDATE):
-	@rm -f $(GOBIN)/protoc-gen-validate
+.PHONY: protocgenvalidatecurl
+protocgenvalidatecurl:
 	@rm -rf third_party/proto/validate
 	@mkdir -p third_party/proto/validate
-	$(eval PROTOC_GEN_VALIDATE_TMP := $(shell mktemp -d))
-	cd $(PROTOC_GEN_VALIDATE_TMP); go get github.com/envoyproxy/protoc-gen-validate@$(PROTOC_GEN_VALIDATE_VERSION)
 	curl -sSL \
 		https://raw.githubusercontent.com/envoyproxy/protoc-gen-validate/$(PROTOC_GEN_VALIDATE_VERSION)/validate/validate.proto \
 		-o third_party/proto/validate/validate.proto
+
+protocpre:: protocgenvalidatecurl
+
+PROTOC_GEN_VALIDATE := $(CACHE_VERSIONS)/protoc-gen-validate/$(PROTOC_GEN_VALIDATE_VERSION)
+$(PROTOC_GEN_VALIDATE):
+	@rm -f $(GOBIN)/protoc-gen-validate
+	$(eval PROTOC_GEN_VALIDATE_TMP := $(shell mktemp -d))
+	cd $(PROTOC_GEN_VALIDATE_TMP); go get github.com/envoyproxy/protoc-gen-validate@$(PROTOC_GEN_VALIDATE_VERSION)
 	@rm -rf $(PROTOC_GEN_VALIDATE_TMP)
 	@rm -rf $(dir $(PROTOC_GEN_VALIDATE))
 	@mkdir -p $(dir $(PROTOC_GEN_VALIDATE))

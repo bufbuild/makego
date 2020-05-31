@@ -20,7 +20,7 @@ PROTOC_GEN_TWIRP_OPT ?=
 EXTRA_MAKEGO_FILES := $(EXTRA_MAKEGO_FILES) scripts/protoc_gen_plugin.bash
 
 .PHONY: protocgentwirp
-protocgentwirp: protocgengoclean $(PROTOC) $(PROTOC_GEN_TWIRP)
+protocgentwirp: protocpre protocgengoclean $(PROTOC) $(PROTOC_GEN_TWIRP)
 	bash $(MAKEGO)/scripts/protoc_gen_plugin.bash \
 		"--proto_path=$(PROTO_PATH)" \
 		"--proto_include_path=$(CACHE_INCLUDE)" \

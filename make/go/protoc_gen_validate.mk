@@ -21,7 +21,7 @@ PROTO_INCLUDE_PATHS := $(PROTO_INCLUDE_PATHS) third_party/proto
 EXTRA_MAKEGO_FILES := $(EXTRA_MAKEGO_FILES) scripts/protoc_gen_plugin.bash
 
 .PHONY: protocgenvalidate
-protocgenvalidate: protocgengoclean $(PROTOC) $(PROTOC_GEN_VALIDATE)
+protocgenvalidate: protocpre protocgengoclean $(PROTOC) $(PROTOC_GEN_VALIDATE)
 	bash $(MAKEGO)/scripts/protoc_gen_plugin.bash \
 		"--proto_path=$(PROTO_PATH)" \
 		"--proto_include_path=$(CACHE_INCLUDE)" \
