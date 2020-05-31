@@ -8,8 +8,8 @@ $(call _assert_var,CACHE_INCLUDE)
 $(call _assert_var,GOBIN)
 
 # Settable
-# https://github.com/envoyproxy/protoc-gen-validate/commits/master 20200311 checked 20200311
-PROTOC_GEN_VALIDATE_VERSION ?= ab56c3dd1cf9b516b62c5087e1ec1471bd63631e
+# https://github.com/envoyproxy/protoc-gen-validate/commits/master 20200515 checked 20200531
+PROTOC_GEN_VALIDATE_VERSION ?= 478e95eb5ebe9afa11d767b6ce53dec79b6cc8c4
 
 GO_GET_PKGS := $(GO_GET_PKGS) github.com/envoyproxy/protoc-gen-validate@$(PROTOC_GEN_VALIDATE_VERSION)
 
