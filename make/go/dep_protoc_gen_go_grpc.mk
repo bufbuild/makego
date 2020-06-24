@@ -7,9 +7,9 @@ $(call _assert_var,CACHE_VERSIONS)
 $(call _assert_var,GOBIN)
 
 # Settable
-# https://github.com/grpc/grpc-go/commits/master 20200529 checked 20200531
-# TODO: Update to a specific release when protoc-gen-go-grpc is released
-PROTOC_GEN_GO_GRPC_VERSION ?= 806b6fc5961483019a839ac031671b32a761ef3e
+# https://github.com/grpc/grpc-go/commits/master 20200623 checked 20200624
+# TODO: Update to releases when protoc-gen-go-grpc is released
+PROTOC_GEN_GO_GRPC_VERSION ?= 4e63bcab52b7ad5c264159e447231710de919b99
 
 GO_GET_PKGS := $(GO_GET_PKGS) google.golang.org/grpc@$(PROTOC_GEN_GO_GRPC_VERSION)
 
