@@ -20,9 +20,14 @@ PROTO_INCLUDE_PATHS := $(PROTO_INCLUDE_PATHS) third_party/proto
 
 EXTRA_MAKEGO_FILES := $(EXTRA_MAKEGO_FILES) scripts/protoc_gen_plugin.bash
 
+PROTOC_GEN_VALIDATE_EXTRA_FLAGS :=
+ifdef PROTOC_USE_BUF
+PROTOC_GEN_VALIDATE_EXTRA_FLAGS := --use-buf
+endif
+
 .PHONY: protocgenvalidate
-protocgenvalidate: protocpre protocgengoclean $(PROTOC) $(PROTOC_GEN_VALIDATE)
-	bash $(MAKEGO)/scripts/protoc_gen_plugin.bash \
+protocgenvalidate: protocgengoclean $(PROTOC) $(PROTOC_GEN_VALIDATE)
+	bash $(MAKEGO)/scripts/protoc_gen_plugin.bash $(PROTOC_GEN_VALIDATE_EXTRA_FLAGS) \
 		"--proto_path=$(PROTO_PATH)" \
 		"--proto_include_path=$(CACHE_INCLUDE)" \
 		$(patsubst %,--proto_include_path=%,$(PROTO_INCLUDE_PATHS)) \
@@ -30,4 +35,4 @@ protocgenvalidate: protocpre protocgengoclean $(PROTOC) $(PROTOC_GEN_VALIDATE)
 		"--plugin_out=$(PROTOC_GEN_VALIDATE_OUT)" \
 		"--plugin_opt=$(PROTOC_GEN_VALIDATE_OPT)"
 
-pregenerate:: protocgenvalidate
+protocgenerate:: protocgenvalidate

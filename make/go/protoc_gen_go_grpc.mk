@@ -18,9 +18,14 @@ PROTOC_GEN_GO_GRPC_OPT ?=
 
 EXTRA_MAKEGO_FILES := $(EXTRA_MAKEGO_FILES) scripts/protoc_gen_plugin.bash
 
+PROTOC_GEN_GO_GRPC_EXTRA_FLAGS :=
+ifdef PROTOC_USE_BUF
+PROTOC_GEN_GO_GRPC_EXTRA_FLAGS := --use-buf
+endif
+
 .PHONY: protocgengogrpc
-protocgengogrpc: protocpre protocgengoclean $(PROTOC) $(PROTOC_GEN_GO_GRPC)
-	bash $(MAKEGO)/scripts/protoc_gen_plugin.bash \
+protocgengogrpc: protocgengoclean $(PROTOC) $(PROTOC_GEN_GO_GRPC)
+	bash $(MAKEGO)/scripts/protoc_gen_plugin.bash $(PROTOC_GEN_GO_GRPC_EXTRA_FLAGS) \
 		"--proto_path=$(PROTO_PATH)" \
 		"--proto_include_path=$(CACHE_INCLUDE)" \
 		$(patsubst %,--proto_include_path=%,$(PROTO_INCLUDE_PATHS)) \
@@ -28,4 +33,4 @@ protocgengogrpc: protocpre protocgengoclean $(PROTOC) $(PROTOC_GEN_GO_GRPC)
 		"--plugin_out=$(PROTOC_GEN_GO_GRPC_OUT)" \
 		"--plugin_opt=$(PROTOC_GEN_GO_GRPC_OPT)"
 
-pregenerate:: protocgengogrpc
+protocgenerate:: protocgengogrpc

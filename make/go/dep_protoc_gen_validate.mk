@@ -21,7 +21,7 @@ protocgenvalidatecurl:
 		https://raw.githubusercontent.com/envoyproxy/protoc-gen-validate/$(PROTOC_GEN_VALIDATE_VERSION)/validate/validate.proto \
 		-o third_party/proto/validate/validate.proto
 
-protocpre:: protocgenvalidatecurl
+protocpreinstall:: protocgenvalidatecurl
 
 PROTOC_GEN_VALIDATE := $(CACHE_VERSIONS)/protoc-gen-validate/$(PROTOC_GEN_VALIDATE_VERSION)
 $(PROTOC_GEN_VALIDATE):
