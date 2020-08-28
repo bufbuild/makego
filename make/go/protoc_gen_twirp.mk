@@ -3,6 +3,7 @@
 # Must be set
 $(call _assert_var,MAKEGO)
 $(call _conditional_include,$(MAKEGO)/base.mk)
+$(call _conditional_include,$(MAKEGO)/dep_buf.mk)
 $(call _conditional_include,$(MAKEGO)/dep_protoc.mk)
 $(call _conditional_include,$(MAKEGO)/dep_protoc_gen_twirp.mk)
 $(call _conditional_include,$(MAKEGO)/protoc_gen_go.mk)
@@ -14,14 +15,22 @@ $(call _assert_var,CACHE_INCLUDE)
 $(call _assert_var,PROTOC)
 $(call _assert_var,PROTOC_GEN_TWIRP)
 
-# Settable
-PROTOC_GEN_TWIRP_OPT ?=
+# Not modifiable for now
+PROTOC_GEN_TWIRP_OPT := paths=source_relative
 
 EXTRA_MAKEGO_FILES := $(EXTRA_MAKEGO_FILES) scripts/protoc_gen_plugin.bash
 
+PROTOC_GEN_TWIRP_EXTRA_FLAGS :=
+ifdef PROTOC_USE_BUF
+PROTOC_GEN_TWIRP_EXTRA_FLAGS := --use-buf
+endif
+ifdef PROTOC_USE_BUF_BY_DIR
+PROTOC_GEN_TWIRP_EXTRA_FLAGS := --use-buf --by-dir
+endif
+
 .PHONY: protocgentwirp
-protocgentwirp: protocpre protocgengoclean $(PROTOC) $(PROTOC_GEN_TWIRP)
-	bash $(MAKEGO)/scripts/protoc_gen_plugin.bash \
+protocgentwirp: protocgengoclean $(PROTOC) $(BUF) $(PROTOC_GEN_TWIRP)
+	bash $(MAKEGO)/scripts/protoc_gen_plugin.bash $(PROTOC_GEN_TWIRP_EXTRA_FLAGS) \
 		"--proto_path=$(PROTO_PATH)" \
 		"--proto_include_path=$(CACHE_INCLUDE)" \
 		$(patsubst %,--proto_include_path=%,$(PROTO_INCLUDE_PATHS)) \
@@ -29,4 +38,4 @@ protocgentwirp: protocpre protocgengoclean $(PROTOC) $(PROTOC_GEN_TWIRP)
 		"--plugin_out=$(PROTOC_GEN_TWIRP_OUT)" \
 		"--plugin_opt=$(PROTOC_GEN_TWIRP_OPT)"
 
-pregenerate:: protocgentwirp
+protocgenerate:: protocgentwirp
