@@ -7,8 +7,8 @@ $(call _assert_var,CACHE_VERSIONS)
 $(call _assert_var,CACHE_BIN)
 
 # Settable
-# https://github.com/twitchtv/twirp/releases 20200724 checked 20200828
-PROTOC_GEN_TWIRP_VERSION ?= v5.12.1
+# https://github.com/twitchtv/twirp/releases 20200915 checked 20200917
+PROTOC_GEN_TWIRP_VERSION ?= v7.0.0
 
 GO_GET_PKGS := $(GO_GET_PKGS) github.com/twitchtv/twirp@$(PROTOC_GEN_TWIRP_VERSION)
 
