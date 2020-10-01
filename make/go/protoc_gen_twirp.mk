@@ -34,6 +34,7 @@ endif
 .PHONY: protocgentwirp
 protocgentwirp: protocgengoclean $(PROTOC) $(BUF) $(PROTOC_GEN_TWIRP)
 	bash $(MAKEGO)/scripts/protoc_gen_plugin.bash $(PROTOC_GEN_TWIRP_EXTRA_FLAGS) \
+		"--buf_path=$(CACHE_BIN)/buf" \
 		"--proto_path=$(PROTO_PATH)" \
 		"--proto_include_path=$(CACHE_INCLUDE)" \
 		$(patsubst %,--proto_include_path=%,$(PROTO_INCLUDE_PATHS)) \
