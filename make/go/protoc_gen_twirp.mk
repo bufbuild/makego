@@ -11,7 +11,6 @@ $(call _conditional_include,$(MAKEGO)/protoc_gen_go.mk)
 $(call _assert_var,PROTO_PATH)
 # Must be set
 $(call _assert_var,PROTOC_GEN_TWIRP_OUT)
-$(call _assert_var,CACHE_BIN)
 $(call _assert_var,CACHE_INCLUDE)
 $(call _assert_var,PROTOC)
 $(call _assert_var,PROTOC_GEN_TWIRP)
@@ -35,7 +34,6 @@ endif
 .PHONY: protocgentwirp
 protocgentwirp: protocgengoclean $(PROTOC) $(BUF) $(PROTOC_GEN_TWIRP)
 	bash $(MAKEGO)/scripts/protoc_gen_plugin.bash $(PROTOC_GEN_TWIRP_EXTRA_FLAGS) \
-		"--buf_path=$(CACHE_BIN)/buf" \
 		"--proto_path=$(PROTO_PATH)" \
 		"--proto_include_path=$(CACHE_INCLUDE)" \
 		$(patsubst %,--proto_include_path=%,$(PROTO_INCLUDE_PATHS)) \
