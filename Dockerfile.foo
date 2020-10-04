@@ -1,12 +1,15 @@
-ARG DOCKER_WORKSPACE_IMAGE
+FROM golang:1.15.2-alpine3.12 as builder
 
-FROM $DOCKER_WORKSPACE_IMAGE as builder
+WORKDIR /workspace
 
-COPY cmd ./cmd
-COPY internal ./internal
-RUN go build -o /go/bin/foo ./cmd/foo
+COPY go.mod go.sum /workspace/
+RUN go mod download
 
-FROM alpine:3.10
+COPY cmd /workspace/cmd
+COPY internal /workspace/internal
+RUN CGO_ENABLED=0 go build -ldflags "-s -w" -trimpath -o /go/bin/foo ./cmd/foo
+
+FROM alpine:3.12.0
 
 RUN apk add --update --no-cache \
     ca-certificates && \
