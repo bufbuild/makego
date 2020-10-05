@@ -17,7 +17,7 @@ $(call _assert_var,PROTOC)
 $(call _assert_var,PROTOC_GEN_GO_GRPC)
 
 # Not modifiable for now
-PROTOC_GEN_GO_GRPC_OPT := paths=source_relative
+PROTOC_GEN_GO_GRPC_OPT := paths=source_relative,require_unimplemented_servers=false
 
 EXTRA_MAKEGO_FILES := $(EXTRA_MAKEGO_FILES) scripts/protoc_gen_plugin.bash
 
