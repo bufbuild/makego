@@ -129,7 +129,7 @@ Update everything and make sure everything builds:
 
 ```bash
 # This also calls make generate and make all
-make updategodeps
+make upgrade
 ```
 
 Figure out the specific files you want (see "Basic Concepts" below), and only include
@@ -231,7 +231,7 @@ project-specific settings and not intended to be set on the command line.
 - `CACHE_BASE` - By default, makego caches to `~/.cache/$(PROJECT)`. Set this to change that.
 - `GO_BINS` - The relative paths to your Golang main packages, For example `cmd/foo`.
   Note if you set this, you should do so by including the current value ie `GO_BINS := $(GO_BINS) cmd/bar`.
-- `GO_GET_PKGS` - Extra packages to get when running `make updategodeps`. The various `protoc`
+- `GO_GET_PKGS` - Extra packages to get when running `make upgrade`. The various `protoc`
   plugin files set this, and for example [make/buf/all.mk](https://github.com/bufbuild/buf/blob/master/make/buf/all.mk)
   adds `master` for [github.com/jhump/protoreflect](https://github.com/jhump/protoreflect).
   Note if you set this, you should do so by including the current value ie `GO_GET_PKGS := $(GO_GET_PKGS) github.com/foo/bar@v1.0.0`.
