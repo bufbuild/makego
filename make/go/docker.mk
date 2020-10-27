@@ -41,10 +41,10 @@ dockerbuild::
 define dockerbinfunc
 .PHONY: dockerbuild$(1)
 dockerbuild$(1):
-	docker build \
-		-t $(DOCKER_ORG)/$(1):latest \
-		-f Dockerfile.$(1) \
-		.
+	docker build -t $(DOCKER_ORG)/$(1):latest -f Dockerfile.$(1) .
+ifdef EXTRA_DOCKER_ORG
+	docker tag $(DOCKER_ORG)/$(1):latest $(EXTRA_DOCKER_ORG)/$(1):latest
+endif
 
 dockerbuild:: dockerbuild$(1)
 endef
