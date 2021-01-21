@@ -12,11 +12,14 @@ $(call _assert_var,CACHE_BIN)
 # https://stedolan.github.io/jq/download checked 20200531
 JQ_VERSION ?= 1.6
 
-ifeq ($(UNAME_ARCH),x86_64)
+# jq does not have an ARM release on Github so we'll use
+# the amd64 version via Rosetta
 ifeq ($(UNAME_OS),Darwin)
 JQ_OS := osx
 JQ_ARCH := -amd64
 endif
+
+ifeq ($(UNAME_ARCH),x86_64)
 ifeq ($(UNAME_OS),Linux)
 JQ_OS := linux
 JQ_ARCH := 64
