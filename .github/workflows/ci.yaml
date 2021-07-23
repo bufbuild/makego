@@ -14,8 +14,3 @@ jobs:
       - name: ci
         if: success()
         run: make ci
-      - name: codecov
-        if: success()
-        run: make codecov
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
