@@ -2,10 +2,11 @@ package main
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/bufbuild/makego/internal/foo"
 )
 
 func main() {
-	fmt.Println(foo.Bar())
+	_, _ = fmt.Fprintln(os.Stdout, foo.Bar())
 }

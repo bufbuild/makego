@@ -3,9 +3,9 @@ run:
 linters-settings:
   errcheck:
     check-type-assertions: true
-  lll:
-    line-length: 140
-    tab-width: 4
+  forbidigo:
+    forbid:
+      - 'fmt\.Print.*'
 linters:
   enable:
     - govet
@@ -16,6 +16,8 @@ linters:
     - dogsled
     - errcheck
     - exportloopref
+    - forbidigo
+    - forcetypeassert
     - gochecknoinits
     - gofmt
     - goheader
@@ -23,13 +25,18 @@ linters:
     - gomodguard
     - goprintffuncname
     - gosimple
+    - gosec
     - govet
+    - importas
     - ineffassign
+    - makezero
     - misspell
     - nakedret
+    - nilerr
     - nolintlint
+    - predeclared
+    - promlinter
     - rowserrcheck
-    - scopelint
     - staticcheck
     - structcheck
     - stylecheck
@@ -37,5 +44,11 @@ linters:
     - unconvert
     - unused
     - varcheck
+    - wastedassign
     - whitespace
   disable-all: true
+issues:
+  exclude-rules:
+    - linters:
+        - stylecheck
+      text: "ST1005:"
