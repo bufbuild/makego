@@ -46,13 +46,13 @@ postupgrade:: all
 
 .PHONY: shortall
 shortall:
-	@$(MAKE) lint
+	@$(MAKE) shortlint
 	@$(MAKE) shorttest
 
 .PHONY: ci
 ci:
 	@$(MAKE) lint
-	@$(MAKE) testrace
+	@$(MAKE) test
 
 .PHONY: upgradegodeps
 upgradegodeps:
@@ -94,10 +94,18 @@ golangcilint: $(GOLANGCI_LINT)
 .PHONY: postlint
 postlint::
 
-.PHONY: lint
-lint:
+.PHONY: postlonglint
+postlonglint::
+
+.PHONY: shortlint
+shortlint:
 	@$(MAKE) checknodiffgenerated
 	@$(MAKE) checknonolint golangcilint postlint
+
+.PHONY: lint
+lint:
+	@$(MAKE) shortlint
+	@$(MAKE) postlonglint
 
 .PHONY: prebuild
 prebuild::
