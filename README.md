@@ -1,9 +1,9 @@
 # Makego
 
-[![License](https://img.shields.io/github/license/bufbuild/makego?color=blue)](https://github.com/bufbuild/makego/blob/master/LICENSE)
+[![License](https://img.shields.io/github/license/bufbuild/makego?color=blue)](https://github.com/bufbuild/makego/blob/main/LICENSE)
 [![Release](https://img.shields.io/github/v/release/bufbuild/makego?include_prereleases)](https://github.com/bufbuild/makego/releases)
 [![CI](https://github.com/bufbuild/makego/workflows/ci/badge.svg)](https://github.com/bufbuild/makego/actions?workflow=ci)
-[![Coverage](https://img.shields.io/codecov/c/github/bufbuild/makego/master)](https://codecov.io/gh/bufbuild/makego)
+[![Coverage](https://img.shields.io/codecov/c/github/bufbuild/makego/main)](https://codecov.io/gh/bufbuild/makego)
 
 Makego is our Makefile setup for our Golang projects. This repository also functions as a template
 repository for our Golang projects that use makego.
@@ -14,7 +14,7 @@ installed, and Docker installed if Docker is used. All other dependences (except
 need to document that most systems will have, such as `bash`, `curl`, and `git`) are installed by makego
 automatically and cached on a per-project basis, including all Golang module downloads.
 
-Makego allows updating from this master (or your forked master) automatically, only copying the files
+Makego allows updating from this main (or your forked main) automatically, only copying the files
 you need.
 
 ## Notice
@@ -149,7 +149,7 @@ you keep the badge links, update them for your repository). Also update the LICE
 
 All projects should have a `make/PROJECT/all.mk` file that defines your actual setup. This
 includes files from `make/go` that you need, as well as any custom build commands See
-[make/buf/all.mk](https://github.com/bufbuild/buf/blob/master/make/buf/all.mk) for a
+[make/buf/all.mk](https://github.com/bufbuild/buf/blob/main/make/buf/all.mk) for a
 real-world example.
 
 This file should all or some of these files, depending on what you need:
@@ -185,7 +185,7 @@ We are not documenting all development commands, however some important ones of 
 - `make dockermakeworkspace` - This will run `make all` by default inside the Docker container
   defined by `Docker.workspace`. You can edit the Makefile target with `DOCKERMAKETARGET`.
 - `make dockerbuild` - Build all Docker images defined by `DOCKER_BINS`.
-- `make updatemakego` - Update from makego master.
+- `make updatemakego` - Update from makego main.
 
 ## Variables
 
@@ -217,7 +217,7 @@ If you use Docker, the following are also required.
 If you use Protobuf, the following are also required.
 
 - `PROTO_PATH` - The path to the root of your Protobuf files. This should generally be `proto` if
-  you put your Protobuf files in `proto`, such as in [Buf](https://github.com/bufbuild/buf/tree/master/proto).
+  you put your Protobuf files in `proto`, such as in [Buf](https://github.com/bufbuild/buf/tree/main/proto).
 - `PROTOC_GEN_.*_OUT` - The output for each plugin, such as `PROTOC_GEN_GO_OUT`.
 
 ### Settable
@@ -232,7 +232,7 @@ project-specific settings and not intended to be set on the command line.
 - `GO_BINS` - The relative paths to your Golang main packages, For example `cmd/foo`.
   Note if you set this, you should do so by including the current value ie `GO_BINS := $(GO_BINS) cmd/bar`.
 - `GO_GET_PKGS` - Extra packages to get when running `make upgrade`. The various `protoc`
-  plugin files set this, and for example [make/buf/all.mk](https://github.com/bufbuild/buf/blob/master/make/buf/all.mk)
+  plugin files set this, and for example [make/buf/all.mk](https://github.com/bufbuild/buf/blob/main/make/buf/all.mk)
   adds `master` for [github.com/jhump/protoreflect](https://github.com/jhump/protoreflect).
   Note if you set this, you should do so by including the current value ie `GO_GET_PKGS := $(GO_GET_PKGS) github.com/foo/bar@v1.0.0`.
 - `GO_LINT_IGNORES` - Extra `grep` ignores for linting.
