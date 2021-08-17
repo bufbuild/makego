@@ -59,8 +59,6 @@ Otherwise, you're free to choose your own layout, however you should generally d
   [cmd/foo](cmd/foo), and add `cmd/foo` to `GO_BINS` such as in [make/foo/all.mk](make/foo/all.mk).
 - If using Docker, put a Dockerfile per main package as [Dockerfile.foo](Dockerfile.foo).
   Then add `foo` to `DOCKER_BINS` such as in [make/foo/all.mk](make/foo/all.mk).
-- Put your Protobuf files in [proto](proto), where `proto` is the root. Then set `PROTO_PATH` to
-  `proto`, such as in [make/foo/all.mk](make/foo/all.mk).
 - Put generated files in any subdirectory named `gen`. Makego treats `gen` directories as special,
   primarily by not linting them or using them for code coverage.
 
@@ -157,8 +155,6 @@ This file should all or some of these files, depending on what you need:
 - [make/go/docker.mk](make/go/docker.mk) - This defines Docker functionality. Only
   include if you want to use Docker. If you do not use Docker, you can delete the `.dockerignore`
   file and any Dockerfiles.
-- [make/go/protoc_gen_.*.mk](make/go). This supports generating files for individual plugins. This
-  will likely go away after the [Buf Image Registry](https://buf.build/docs/roadmap) is live.
 
 All other files are automatically included.
 
@@ -208,12 +204,6 @@ If you use Docker, the following are also required.
 - `DOCKER_PROJECT` - The Docker project name, generally the same as `PROJECT`. The Docker image
   `$(DOCKER_ORG)/$(DOCKER_PROJECT)-workspace` will be created.
 
-If you use Protobuf, the following are also required.
-
-- `PROTO_PATH` - The path to the root of your Protobuf files. This should generally be `proto` if
-  you put your Protobuf files in `proto`, such as in [Buf](https://github.com/bufbuild/buf/tree/main/proto).
-- `PROTOC_GEN_.*_OUT` - The output for each plugin, such as `PROTOC_GEN_GO_OUT`.
-
 ### Settable
 
 These variables are settable in your Makefiles, but should be static, i.e. these are for
@@ -225,8 +215,8 @@ project-specific settings and not intended to be set on the command line.
 - `CACHE_BASE` - By default, makego caches to `~/.cache/$(PROJECT)`. Set this to change that.
 - `GO_BINS` - The relative paths to your Golang main packages, For example `cmd/foo`.
   Note if you set this, you should do so by including the current value ie `GO_BINS := $(GO_BINS) cmd/bar`.
-- `GO_GET_PKGS` - Extra packages to get when running `make upgrade`. The various `protoc`
-  plugin files set this, and for example [make/buf/all.mk](https://github.com/bufbuild/buf/blob/main/make/buf/all.mk)
+- `GO_GET_PKGS` - Extra packages to get when running `make upgrade`.
+  For example, [make/buf/all.mk](https://github.com/bufbuild/buf/blob/main/make/buf/all.mk)
   adds `master` for [github.com/jhump/protoreflect](https://github.com/jhump/protoreflect).
   Note if you set this, you should do so by including the current value ie `GO_GET_PKGS := $(GO_GET_PKGS) github.com/foo/bar@v1.0.0`.
 - `GO_LINT_IGNORES` - Extra `grep` ignores for linting.
@@ -234,8 +224,6 @@ project-specific settings and not intended to be set on the command line.
 - `DOCKER_BINS` - This sets any Dockerfiles that are to be built. There should be a matching
   `Dockerfile.binaryname` for each value.
   Note if you set this, you should do so by including the current value ie `DOCKER_BINS := $(DOCKER_BINS) bar`.
-- `PROTOC_GEN_.*_OPT` - This sets options for each plugin (except for `protoc-gen-validate`), such
-  as `PROTOC_GEN_GO_OPT := plugins=grpc`.
 - `.*_VERSION` - This sets the version for dependencies, such as `ERRCHECK_VERSION := e14f8d59a22d460d56c5ee92507cd94c78fbf274`. We update these once in a while, but you can set your own as well to make sure your own
   builds are deterministic. See the `dep_.*` files for the individual variables.
 
