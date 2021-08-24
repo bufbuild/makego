@@ -17,6 +17,7 @@ GO_TEST_BINS ?=
 # Settable
 GO_GET_PKGS ?= ./cmd/... ./internal/...
 # Settable
+# This should always be one version back!
 GO_MOD_VERSION ?= 1.16
 
 # Runtime
@@ -59,6 +60,9 @@ upgradegodeps:
 	rm -f go.mod go.sum
 	go mod init $(GO_MODULE)
 	go mod edit -go=$(GO_MOD_VERSION)
+ifneq ($(GO_GET_PRE_MOD_TIDY_PKGS),)
+	go get $(GO_GET_PRE_MOD_TIDY_PKGS)
+endif
 	go mod tidy -v
 	go get -u -t $(GO_GET_PKGS)
 ifneq ($(GO_GET_PKGS),)
