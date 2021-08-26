@@ -188,8 +188,8 @@ upgradenopost:
 	@$(MAKE) preupgrade
 	@$(MAKE) generate
 
-.PHONY: updatemakego
-updatemakego:
+.PHONY: copyfrommakego
+copyfrommakego:
 	@rm -rf $(TMP)/makego
 	@mkdir -p $(TMP)
 	git clone $(MAKEGO_REMOTE) $(TMP)/makego
