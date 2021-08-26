@@ -32,6 +32,10 @@ cd "${1}"
 git add --all .
 git status
 git diff main
+if [ -z "$(git status -s)" ]; then
+  echo "Nothing to copy, exiting." >&2
+  exit 0
+fi
 
 while true; do
   read -p "Do you want to commit and push all files [y/n]: " push_all
@@ -47,7 +51,7 @@ while true; do
             break
             ;;
           [Nn] )
-            echo "Aborting"
+            echo "Aborting."
             exit 1
             ;;
           * )
@@ -58,7 +62,7 @@ while true; do
       break
       ;;
     [Nn] )
-      echo "Aborting"
+      echo "Aborting."
       exit 1
       ;;
     * )
