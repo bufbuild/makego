@@ -18,7 +18,7 @@ ENV_BACKUP_DIR := $(HOME)/.config/$(PROJECT)/env
 
 TMP := .tmp
 
-EXTRA_MAKEGO_FILES := $(EXTRA_MAKEGO_FILES) scripts/checknodiffgenerated.bash
+EXTRA_MAKEGO_FILES := $(EXTRA_MAKEGO_FILES) scripts/checknodiffgenerated.bash scripts/pushall.bash
 
 # Settable
 # These are exact file paths that are added to .gitignore and .dockerignore
@@ -192,9 +192,6 @@ upgradenopost:
 
 .PHONY: updatemakego
 updatemakego:
-ifndef CONFIRM
-	$(error Set CONFIRM=1 to acknowledge this is potentially destructive to your current makego files)
-else
 	@rm -rf $(TMP)/makego
 	@mkdir -p $(TMP)
 	git clone $(MAKEGO_REMOTE) $(TMP)/makego
@@ -204,7 +201,6 @@ ifndef ALL
 	$(MAKE) cleanmakego
 endif
 	@rm -rf $(TMP)/makego
-endif
 
 .PHONY: cleanmakego
 cleanmakego:
@@ -218,11 +214,7 @@ copytomakego:
 	@mkdir -p $(TMP)
 	git clone $(MAKEGO_REMOTE) $(TMP)/makego
 	$(foreach makego_file,$(subst $(MAKEGO)/,,$(shell find $(MAKEGO) -type f)),mkdir -p $(TMP)/makego/make/go/$(dir $(makego_file)); cp $(MAKEGO)/$(makego_file) $(TMP)/makego/make/go/$(makego_file); )
-	@cd $(TMP)/makego; git status; git diff
-	@echo cd $(TMP)/makego
-	@echo git diff
-	@echo git push origin main
-	@echo cd -
+	bash $(MAKEGO)/scripts/pushall.bash $(TMP)/makego
 
 .PHONY: initmakego
 initmakego::
