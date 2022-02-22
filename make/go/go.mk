@@ -21,6 +21,8 @@ GO_GET_PKGS ?=
 GO_MOD_VERSION ?= 1.16
 # Settable
 GO_ALL_REPO_PKGS ?= ./cmd/... ./internal/...
+# Settable
+SKIP_GOLANGCI_LINT ?=
 
 # Runtime
 GOPKGS ?= $(GO_ALL_REPO_PKGS)
@@ -93,7 +95,11 @@ checknonolint:
 
 .PHONY: golangcilint
 golangcilint: $(GOLANGCI_LINT)
+ifneq ($(SKIP_GOLANGCI_LINT),)
+	@echo Skipping golangci-lint...
+else
 	golangci-lint run --timeout $(GOLANGCILINTTIMEOUT)
+endif
 
 .PHONY: postlint
 postlint::
