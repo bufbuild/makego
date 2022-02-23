@@ -21,7 +21,7 @@ you need.
 Makego is primarily OSS as we use it in our OSS projects. Makego will likely have many breaking
 changes, and **we do not provide support for it in any form**. You're obviously welcome
 to fork it and/or use components of it, however - the `MAKEGO_REMOTE` variable controls the remote location
-for `make updatemakego` and `make copytomakego`.
+for `make copyfrommakego`.
 
 If you do use this, you should get familiar with the actual Makefiles contained in this project.
 
@@ -189,10 +189,7 @@ These variables should be defined in your Makefile and are required.
 - `MAKEGO` - The location of the `make/go` directory. Generally you should have this as `make/go`,
   however we did make it settable so you can put the files somewhere else.
 - `MAKEGO_REMOTE` - The remote location for makego. You should point this at your fork. The
-  make target `make copytomakego` will copy your current files to makego in a temporary clone. This
-  allows you to edit in individual projects and then easily push updates. If you never want to do
-  this, don't run `make copytomakego`, however note that doing so won't mess anything up directly -
-  you still need to manually push (the commands are printed out by `make copytomakego` on success).
+  make target `make copyfrommakego` will copy makego to your current files.
 - `PROJECT` - Your project name. This is used for many things such as your config and cache
   locations.
 - `GO_MODULE` - Your Golang module name.
