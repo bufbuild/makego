@@ -5,13 +5,19 @@ linters-settings:
     check-type-assertions: true
   forbidigo:
     forbid:
-      - 'fmt\.Print.*'
+      - '^fmt\.Print'
+      - '^log\.'
+      - '^print$'
+      - '^println$'
 linters:
   enable:
-    - govet
     - asciicheck
+    - bidichk
     - bodyclose
+    - containedctx
+    - contextcheck
     - deadcode
+    - decorder
     - depguard
     - dogsled
     - errcheck
@@ -24,9 +30,10 @@ linters:
     - goimports
     - gomodguard
     - goprintffuncname
-    - gosimple
     - gosec
+    - gosimple
     - govet
+    - grouper
     - importas
     - ineffassign
     - makezero
@@ -47,8 +54,3 @@ linters:
     - wastedassign
     - whitespace
   disable-all: true
-issues:
-  exclude-rules:
-    - linters:
-        - stylecheck
-      text: "ST1005:"
