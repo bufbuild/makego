@@ -6,6 +6,9 @@ LICENSE_HEADER_COPYRIGHT_HOLDER := Buf Technologies, Inc.
 LICENSE_HEADER_YEAR_RANGE := 2020-2022
 LICENSE_HEADER_IGNORES := \/testdata
 
+BUF_LINT_INPUT := .
+BUF_FORMAT_INPUT := .
+
 include make/go/bootstrap.mk
 include make/go/go.mk
 include make/go/docker.mk
