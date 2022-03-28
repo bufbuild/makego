@@ -20,6 +20,6 @@ set -e
 
 if [ -s "${STATUS_SHORT_DIFF_FILE}" ]; then
   echo "error: $@ produced a diff,  make sure to check these in:" >&2
+  grep '<\|>' "${STATUS_SHORT_DIFF_FILE}" >&2
   exit 1
-$(grep '<\|>' "${STATUS_SHORT_DIFF_FILE}")"
 fi
