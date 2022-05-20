@@ -21,6 +21,7 @@ linters:
     - depguard
     - dogsled
     - errcheck
+    - execinquery
     - exportloopref
     - forbidigo
     - forcetypeassert
@@ -41,6 +42,7 @@ linters:
     - nakedret
     - nilerr
     - nolintlint
+    - nosprintfhostport
     - predeclared
     - promlinter
     - rowserrcheck
