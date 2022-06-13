@@ -3,7 +3,7 @@ module github.com/bufbuild/makego
 go 1.18
 
 require (
-	github.com/stretchr/testify v1.7.1
+	github.com/stretchr/testify v1.7.2
 	google.golang.org/protobuf v1.28.0
 )
 
