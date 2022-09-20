@@ -16,7 +16,6 @@ linters:
     - bodyclose
     - containedctx
     - contextcheck
-    - deadcode
     - decorder
     - depguard
     - dogsled
@@ -37,6 +36,8 @@ linters:
     - grouper
     - importas
     - ineffassign
+    - interfacebloat
+    - logrlint
     - makezero
     - misspell
     - nakedret
@@ -45,14 +46,13 @@ linters:
     - nosprintfhostport
     - predeclared
     - promlinter
+    - reassign
     - rowserrcheck
     - staticcheck
-    - structcheck
     - stylecheck
     - typecheck
     - unconvert
     - unused
-    - varcheck
     - wastedassign
     - whitespace
   disable-all: true
