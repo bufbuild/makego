@@ -7,7 +7,7 @@ $(call _assert_var,CACHE_VERSIONS)
 $(call _assert_var,CACHE_BIN)
 
 # Settable
-# https://github.com/bufbuild/buf/releases
+# https://github.com/bufbuild/buf/releases 20221219 checked 20230104
 BUF_VERSION ?= v1.11.0
 # Settable
 #
