@@ -83,7 +83,7 @@ gofmtmodtidy:
 	@gofmt -s -w $(shell find . -name '*.go')
 	go mod tidy -v
 
-postgenerate:: gofmtmodtidy
+format:: gofmtmodtidy
 
 .PHONY: checknonolint
 checknonolint:
