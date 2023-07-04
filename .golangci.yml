@@ -17,7 +17,7 @@ linters:
     - containedctx
     - contextcheck
     - decorder
-    - depguard
+    # - depguard
     - dogsled
     - errcheck
     - execinquery
@@ -32,6 +32,7 @@ linters:
     - goprintffuncname
     - gosec
     - gosimple
+    - gosmopolitan
     - govet
     - grouper
     - importas
@@ -39,6 +40,7 @@ linters:
     - interfacebloat
     - logrlint
     - makezero
+    - mirror
     - misspell
     - nakedret
     - nilerr
