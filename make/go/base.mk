@@ -32,6 +32,7 @@ CACHE_BASE ?= $(HOME)/.cache/$(PROJECT)
 
 CACHE := $(CACHE_BASE)/$(UNAME_OS)/$(UNAME_ARCH)
 CACHE_BIN := $(CACHE)/bin
+CACHE_DOCKER := $(CACHE)/docker
 CACHE_INCLUDE := $(CACHE)/include
 CACHE_VERSIONS := $(CACHE)/versions
 CACHE_ENV := $(CACHE)/env
