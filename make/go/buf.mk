@@ -4,7 +4,6 @@
 $(call _assert_var,MAKEGO)
 $(call _conditional_include,$(MAKEGO)/base.mk)
 $(call _conditional_include,make/go/dep_buf.mk)
-$(call _conditional_include,make/go/dep_jq.mk)
 
 # Settable
 BUF_LINT_INPUT ?=
