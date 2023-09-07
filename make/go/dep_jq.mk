@@ -14,10 +14,10 @@ JQ_VERSION ?= 1.7
 
 ifeq ($(UNAME_OS),Darwin)
 JQ_OS := macos
-ifeq ($(UNAME_ARCH),arm64)
-JQ_ARCH := arm64
-else
+ifeq ($(UNAME_ARCH),x86_64)
 JQ_ARCH := amd64
+else
+JQ_ARCH := $(UNAME_ARCH)
 endif
 endif
 
