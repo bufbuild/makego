@@ -21,5 +21,6 @@ import (
 )
 
 func TestBar(t *testing.T) {
+	t.Parallel()
 	assert.Equal(t, "bar", Bar())
 }
