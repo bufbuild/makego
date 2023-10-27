@@ -36,6 +36,7 @@ linters:
     - govet
     - grouper
     - importas
+    - inamedparam
     - ineffassign
     - interfacebloat
     - logrlint
@@ -46,12 +47,15 @@ linters:
     - nilerr
     - nolintlint
     - nosprintfhostport
+    - perfsprint
     - predeclared
     - promlinter
+    - protogetter
     - reassign
     - rowserrcheck
     - staticcheck
     - stylecheck
+    - testifylint
     - typecheck
     - unconvert
     - unused
