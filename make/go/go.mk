@@ -58,11 +58,14 @@ ci:
 	@$(MAKE) lint
 	@$(MAKE) test
 
+.PHONY: preupgradegodeps
+preupgradegodeps::
+
 .PHONY: postupgradegodeps
 postupgradegodeps::
 
 .PHONY: upgradegodeps
-upgradegodeps:
+upgradegodeps: preupgradegodeps
 	rm -f go.mod go.sum
 	go mod init $(GO_MODULE)
 	go mod edit -go=$(GO_MOD_VERSION)
