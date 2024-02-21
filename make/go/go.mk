@@ -91,7 +91,7 @@ format:: gofmtmodtidy
 
 .PHONY: checknonolint
 checknonolint:
-	@if find . -name '*.go' -print0 | xargs -0 grep '//nolint'; then \
+	@if grep -r --include "*.go" '//nolint'; then \
 		echo '//nolint directives found, surface ignores in .golangci.yml instead' >&2; \
 		exit 1; \
 	fi
