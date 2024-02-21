@@ -84,7 +84,7 @@ godeps: deps
 .PHONY: gofmtmodtidy
 gofmtmodtidy:
 	@echo gofmt -s -w ALL_GO_FILES
-	@find . -name '*.go' -print0 | xargs -0 gofmt -s -w
+	@gofmt -s -w .
 	go mod tidy -v
 
 format:: gofmtmodtidy
