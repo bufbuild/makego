@@ -10,7 +10,7 @@ set -euo pipefail
 if [[ ! -f .golangci.yml ]]; then
     echo "nolintlint not enabled in .golangci.yml" >&2
     exit 1
-fiq
+fi
 
 # Check if nolintlint linter is enabled in config
 NOLINTLINT_ENABLED=0
