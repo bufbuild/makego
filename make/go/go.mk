@@ -91,7 +91,9 @@ format:: gofmtmodtidy
 
 .PHONY: checknonolint
 checknonolint:
-	@if grep -r --include "*.go" '//nolint'; then \
+	@if bash $(MAKEGO)/scripts/checknolintlint.bash; then \
+		echo 'golangci-lint nolintlint configured'; \
+	elif grep -r --include "*.go" '//nolint'; then \
 		echo '//nolint directives found, surface ignores in .golangci.yml instead' >&2; \
 		exit 1; \
 	fi

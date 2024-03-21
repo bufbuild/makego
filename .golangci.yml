@@ -21,6 +21,10 @@ linters-settings:
       - T any
       - i int
       - wg sync.WaitGroup
+  nolintlint:
+    allow-unused: false
+    require-explanation: true
+    require-specific: true
 linters:
   enable-all: true
   disable:
