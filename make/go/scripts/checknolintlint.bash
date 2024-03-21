@@ -37,7 +37,12 @@ fi
 #       require-specific: true
 #
 
-declare allow_unused= require_explanation= require_specific= allow_no_explanation_0=
+# These values will be set below by the yq command (if set in the file).
+allow_unused=
+require_explanation=
+require_specific=
+allow_no_explanation_0=
+
 eval $(yq --output-format shell '.linters-settings.nolintlint' .golangci.yml)
 if [[ "${allow_unused}" != "false" ]]; then
     echo ".golangci.yml: nolintlint allow-unused must be set to false" >&2
