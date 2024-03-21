@@ -4,6 +4,7 @@
 $(call _assert_var,MAKEGO)
 $(call _conditional_include,$(MAKEGO)/base.mk)
 $(call _conditional_include,$(MAKEGO)/dep_golangci_lint.mk)
+$(call _conditional_include,$(MAKEGO)/dep_yq.mk)
 # Must be set
 $(call _assert_var,GO_MODULE)
 $(call _assert_var,GOLANGCI_LINT)
@@ -90,7 +91,7 @@ gofmtmodtidy:
 format:: gofmtmodtidy
 
 .PHONY: checknonolint
-checknonolint:
+checknonolint: $(YQ)
 	@if bash $(MAKEGO)/scripts/checknolintlint.bash; then \
 		echo 'golangci-lint nolintlint configured'; \
 	elif grep -r --include "*.go" '//nolint'; then \

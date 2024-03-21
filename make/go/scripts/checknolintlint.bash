@@ -10,22 +10,20 @@ set -euo pipefail
 
 # Check if nonolint linter is enabled in config
 NOLINTLINT_ENABLED=0
-if yq '.linters.enable // [] | any_c(. == "nolintlint")' .golangci.yml > /dev/null 2>&1; then
+if [[ `yq '.linters.enable // [] | any_c(. == "nolintlint")' .golangci.yml` == "true" ]]; then
     # Enabled individually
     NOLINTLINT_ENABLED=1
-elif yq --exit-status '.linters.enable-all' .golangci.yml > /dev/null 2>&1; then
+elif [[ `yq '.linters.enable-all' .golangci.yml` == "true" ]]; then
     # Enabled with enable-all
     NOLINTLINT_ENABLED=1
 fi
 if [ "${NOLINTLINT_ENABLED}" -eq 1 ]; then
     # Ensure it isn't disabled individually
-    if yq --exit-status '.linters.disable // [] | any_c(. == "nolintlint")' .golangci.yml > /dev/null 2>&1; then
+    if [[ `yq '.linters.disable // [] | any_c(. == "nolintlint")' .golangci.yml` == "true" ]]; then
         NOLINTLINT_ENABLED=0
-        echo "disabled individually" >&2
     fi
 fi
 if [ "${NOLINTLINT_ENABLED}" -eq 0 ]; then
-    echo "not enabled" >&2
     exit 2
 fi
 
