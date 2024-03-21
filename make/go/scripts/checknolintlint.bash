@@ -2,13 +2,17 @@
 
 # Managed by makego. DO NOT EDIT.
 
-## checknolintlint exits with an exit code of 0 if nolintlint is enabled and configured properly.
-## It exits with an exit code of 2 if nolintlint is not enabled in .golangci.yml.
-## It exits with an exit code of 1 if nolintlint is not configured according to standards.
+## checknolintlint exits with exit code 0 if nolintlint is enabled and configured according to standards.
+## Otherwise, it exits with exit code 1.
 
 set -euo pipefail
 
-# Check if nonolint linter is enabled in config
+if [[ ! -f .golangci.yml ]]; then
+    echo "nolintlint not enabled in .golangci.yml" >&2
+    exit 1
+fiq
+
+# Check if nolintlint linter is enabled in config
 NOLINTLINT_ENABLED=0
 if [[ `yq '.linters.enable // [] | any_c(. == "nolintlint")' .golangci.yml` == "true" ]]; then
     # Enabled individually
@@ -24,7 +28,8 @@ if [ "${NOLINTLINT_ENABLED}" -eq 1 ]; then
     fi
 fi
 if [ "${NOLINTLINT_ENABLED}" -eq 0 ]; then
-    exit 2
+    echo "nolintlint not enabled in .golangci.yml" >&2
+    exit 1
 fi
 
 # Check if nolintlint is configured according to standards.
@@ -60,4 +65,3 @@ if [[ -n "${allow_no_explanation_0}" ]]; then
     echo ".golangci.yml: nolintlint allow-no-explanation must be empty" >&2
     exit 1
 fi
-exit 0
