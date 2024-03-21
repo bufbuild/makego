@@ -37,19 +37,21 @@ fi
 #       require-specific: true
 #
 
-if [[ `yq '.linters-settings.nolintlint.allow-unused // false' .golangci.yml` != "false" ]]; then
+declare allow_unused= require_explanation= require_specific= allow_no_explanation_0=
+eval $(yq --output-format shell '.linters-settings.nolintlint' .golangci.yml)
+if [[ "${allow_unused}" != "false" ]]; then
     echo ".golangci.yml: nolintlint allow-unused must be set to false" >&2
     exit 1
 fi
-if [[ `yq '.linters-settings.nolintlint.require-explanation // false' .golangci.yml` != "true" ]]; then
+if [[ "${require_explanation}" != "true" ]]; then
     echo ".golangci.yml: nolintlint require-explanation must be set to true" >&2
     exit 1
 fi
-if [[ `yq '.linters-settings.nolintlint.require-specific // false' .golangci.yml` != "true" ]]; then
+if [[ "${require_specific}" != "true" ]]; then
     echo ".golangci.yml: nolintlint require-specific must be set to true" >&2
     exit 1
 fi
-if [[ `yq '.linters-settings.nolintlint.allow-no-explanation // [] | length' .golangci.yml` != "0" ]]; then
+if [[ -n "${allow_no_explanation_0}" ]]; then
     echo ".golangci.yml: nolintlint allow-no-explanation must be empty" >&2
     exit 1
 fi
