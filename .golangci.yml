@@ -29,6 +29,7 @@ linters:
     - cyclop            # covered by gocyclo
     - depguard          # newer versions require explicit config to depend on anything outside of the Go stdlib
     - execinquery       # deprecated by author
+    - exportloopref     # deprecated in golangci v1.60.2
     - funlen            # rely on code review to limit function length
     - gocognit          # dubious "cognitive overhead" quantification
     - gofumpt           # prefer standard gofmt
