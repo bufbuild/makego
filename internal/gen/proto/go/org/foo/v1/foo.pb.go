@@ -44,9 +44,11 @@ type Bar struct {
 
 func (x *Bar) Reset() {
 	*x = Bar{}
-	mi := &file_org_foo_v1_foo_proto_msgTypes[0]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
+	if protoimpl.UnsafeEnabled {
+		mi := &file_org_foo_v1_foo_proto_msgTypes[0]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
 }
 
 func (x *Bar) String() string {
@@ -57,7 +59,7 @@ func (*Bar) ProtoMessage() {}
 
 func (x *Bar) ProtoReflect() protoreflect.Message {
 	mi := &file_org_foo_v1_foo_proto_msgTypes[0]
-	if x != nil {
+	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
 			ms.StoreMessageInfo(mi)
@@ -127,6 +129,20 @@ func init() { file_org_foo_v1_foo_proto_init() }
 func file_org_foo_v1_foo_proto_init() {
 	if File_org_foo_v1_foo_proto != nil {
 		return
+	}
+	if !protoimpl.UnsafeEnabled {
+		file_org_foo_v1_foo_proto_msgTypes[0].Exporter = func(v any, i int) any {
+			switch v := v.(*Bar); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
