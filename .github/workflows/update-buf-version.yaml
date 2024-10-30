@@ -36,4 +36,4 @@ jobs:
           git add make/go/dep_buf.mk
           git commit -m "Update version to ${RELEASE_BUF_VERSION}"
           git push --set-upstream origin --force ${BRANCH} 
-          gh pr create --title "Release v${RELEASE_BUF_VERSION}" --body "Release prepared for ${RELEASE_BUF_VERSION}"
+          gh pr create --title "Update buf version to v${RELEASE_BUF_VERSION}" --body "Update buf version to newly released version, ${RELEASE_BUF_VERSION}."
