@@ -6,6 +6,9 @@ on:
         type: string
         description: The version you intend to release (e.g. x.y.z)
         required: true
+permissions:
+  contents: write
+  pull-requests: write
 env:
   RELEASE_BUF_VERSION: ${{ github.event.inputs.version }}
 
@@ -18,12 +21,6 @@ jobs:
         run: |
           echo "error: version must not start with 'v'."
           exit 1
-      - name: Get GitHub app token
-        uses: actions/create-github-app-token@v1
-        id: app_token
-        with:
-          app-id: #TODO: get new token
-          private-key: #TODO: get new token
       - name: Checkout repository code
         uses: actions/checkout@v4
         with:
@@ -34,11 +31,9 @@ jobs:
         run: |
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor }}@users.noreply.github.com"
-          BRANCH="release/v${VERSION}"
+          BRANCH="release/v${RELEASE_BUF_VERSION}"
           git switch -C ${BRANCH}
-          git add PKGBUILD .SRCINFO
-          git commit -m "Update version to ${VERSION}"
+          git add make/go/dep_buf.mk
+          git commit -m "Update version to ${RELEASE_BUF_VERSION}"
           git push --set-upstream origin --force ${BRANCH} 
-          gh pr create --title "Release v${VERSION}" --body "Release prepared for ${VERSION}"
-        env:
-          GH_TOKEN: ${{ steps.app_token.outputs.token }}
+          gh pr create --title "Release v${RELEASE_BUF_VERSION}" --body "Release prepared for ${RELEASE_BUF_VERSION}"
