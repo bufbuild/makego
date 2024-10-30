@@ -64,12 +64,6 @@ endif
 endif
 
 .PHONY: updatebufversion
-UNAME := $(shell uname)
 updatebufversion:
-ifeq ($(UNAME),Darwin)
-	sed -i "" -E "s/BUF_VERSION \?=.*/BUF_VERSION ?= ${RELEASE_BUF_VERSION}/" "make/go/dep_buf.mk"
-	sed -i "" -E "s/\# https\:\/\/github.com\/bufbuild\/buf\/releases.*/\# https\:\/\/github.com\/bufbuild\/buf\/releases $(shell date "+%Y%m%d") checked $(shell date "+%Y%m%d")/" "make/go/dep_buf.mk"
-else
-	sed -i -E "s/BUF_VERSION \?=.*/BUF_VERSION ?= ${RELEASE_BUF_VERSION}/" "make/go/dep_buf.mk"
-	sed -i -E "s/\# https\:\/\/github.com\/bufbuild\/buf\/releases.*/\# https\:\/\/github.com\/bufbuild\/buf\/releases $(shell date "+%Y%m%d") checked $(shell date "+%Y%m%d")/" "make/go/dep_buf.mk"
-endif
+	$(SED_I) -E "s/BUF_VERSION \?=.*/BUF_VERSION ?= ${RELEASE_BUF_VERSION}/" "make/go/dep_buf.mk"
+	$(SED_I) -E "s/\# https\:\/\/github.com\/bufbuild\/buf\/releases.*/\# https\:\/\/github.com\/bufbuild\/buf\/releases $(shell date "+%Y%m%d") checked $(shell date "+%Y%m%d")/" "make/go/dep_buf.mk"
