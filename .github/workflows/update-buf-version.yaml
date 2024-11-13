@@ -23,8 +23,6 @@ jobs:
           exit 1
       - name: Checkout repository code
         uses: actions/checkout@v4
-        with:
-          token: ${{ steps.app_token.outputs.token }}
       - name: Update Buf Version
         run: make updatebufversion
       - name: Create PR
