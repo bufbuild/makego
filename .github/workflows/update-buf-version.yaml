@@ -26,12 +26,11 @@ jobs:
       - name: Update Buf Version
         run: make updatebufversion
       - name: Create PR
-        run: |
-          git config user.name "${{ github.actor }}"
-          git config user.email "${{ github.actor }}@users.noreply.github.com"
-          BRANCH="release/v${RELEASE_BUF_VERSION}"
-          git switch -C ${BRANCH}
-          git add make/go/dep_buf.mk
-          git commit -m "Update version to ${RELEASE_BUF_VERSION}"
-          git push --set-upstream origin --force ${BRANCH} 
-          gh pr create --title "Update buf version to v${RELEASE_BUF_VERSION}" --body "Update buf version to newly released version, ${RELEASE_BUF_VERSION}."
+        uses: peter-evans/create-pull-request@5e914681df9dc83aa4e4905692ca88beb2f9e91f
+        with:
+          add-paths: .
+          commit-message: "Update bufbuild/buf version to ${{ env.RELEASE_BUF_VERSION }}"
+          branch: buf-${{ env.RELEASE_BUF_VERSION }}
+          delete-branch: true
+          title: "Update bufbuild/buf version to ${{ env.RELEASE_BUF_VERSION }}"
+          body: "Update bufbuild/buf version to newly released version, v${{ env.RELEASE_BUF_VERSION }}."
