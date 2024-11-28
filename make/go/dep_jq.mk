@@ -21,7 +21,7 @@ endif
 ifeq ($(UNAME_ARCH),x86_64)
 JQ_ARCH := amd64
 else
-JQ_ARCH := $(UNAME_OS)
+JQ_ARCH := $(UNAME_ARCH)
 endif
 
 JQ := $(CACHE_VERSIONS)/jq/$(JQ_VERSION)
