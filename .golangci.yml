@@ -39,6 +39,7 @@ linters:
     - mnd               # some unnamed constants are okay
     - nlreturn          # generous whitespace violates house style
     - nonamedreturns    # named returns are fine; it's *bare* returns that are bad
+    - tenv              # Deprecated, replaced by usetesting
     - testpackage       # internal tests are fine
     - wrapcheck         # don't _always_ need to wrap errors
     - wsl               # generous whitespace violates house style
