@@ -23,9 +23,9 @@ GOLANGCI_LINT_ARCH := $(UNAME_ARCH)
 endif
 
 # Settable
-# https://github.com/golangci/golangci-lint/releases 20250103 checked 20250124
+# https://github.com/golangci/golangci-lint/releases 20250211 checked 20250212
 # Contrast golangci-lint configuration with the one in https://github.com/connectrpc/connect-go/blob/main/.golangci.yml when upgrading
-GOLANGCI_LINT_VERSION ?= v1.63.4
+GOLANGCI_LINT_VERSION ?= v1.64.2
 
 GOLANGCI_LINT := $(CACHE_VERSIONS)/golangci-lint/$(GOLANGCI_LINT_VERSION)
 $(GOLANGCI_LINT):
