@@ -1,6 +1,6 @@
 version: "2"
 linters:
-  enable-all: true
+  default: all
   disable:
     - cyclop
     - depguard
