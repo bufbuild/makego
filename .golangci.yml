@@ -1,54 +1,59 @@
-linters-settings:
-  errcheck:
-    check-type-assertions: true
-  forbidigo:
-    forbid:
-      - '^fmt\.Print'
-      - '^log\.'
-      - '^print$'
-      - '^println$'
-      - '^panic$'
-  godox:
-    # TODO, OPT, etc. comments are fine to commit. Use FIXME comments for
-    # temporary hacks, and use godox to prevent committing them.
-    keywords: [FIXME]
-  importas:
-    no-unaliased: true
-  varnamelen:
-    ignore-decls:
-      - T any
-      - i int
-      - wg sync.WaitGroup
-  nolintlint:
-    allow-unused: false
-    require-explanation: true
-    require-specific: true
+version: "2"
 linters:
-  enable-all: true
+  default: all
   disable:
-    - cyclop            # covered by gocyclo
-    - depguard          # newer versions require explicit config to depend on anything outside of the Go stdlib
-    - funlen            # rely on code review to limit function length
-    - gocognit          # dubious "cognitive overhead" quantification
-    - gofumpt           # prefer standard gofmt
-    - goimports         # rely on gci instead
-    - inamedparam       # convention is not followed
-    - ireturn           # "accept interfaces, return structs" isn't ironclad
-    - lll               # don't want hard limits for line length
-    - maintidx          # covered by gocyclo
-    - mnd               # some unnamed constants are okay
-    - nlreturn          # generous whitespace violates house style
-    - nonamedreturns    # named returns are fine; it's *bare* returns that are bad
-    - tenv              # Deprecated, replaced by usetesting
-    - testpackage       # internal tests are fine
-    - wrapcheck         # don't _always_ need to wrap errors
-    - wsl               # generous whitespace violates house style
-issues:
-  exclude-dirs-use-default: false
-  exclude-rules:
-    # Don't ban use of fmt.Errorf to create new errors, but the remaining
-    # checks from err113 are useful.
-    - linters:
-      - err113
-      - goerr113
-      text: "do not define dynamic errors"
+    - cyclop
+    - depguard
+    - funlen
+    - gocognit
+    - inamedparam
+    - ireturn
+    - lll
+    - maintidx
+    - mnd
+    - nlreturn
+    - nonamedreturns
+    - testpackage
+    - wrapcheck
+    - wsl
+  settings:
+    errcheck:
+      check-type-assertions: true
+    forbidigo:
+      forbid:
+        - pattern: ^fmt\.Print
+        - pattern: ^log\.
+        - pattern: ^print$
+        - pattern: ^println$
+        - pattern: ^panic$
+    godox:
+      keywords:
+        - FIXME
+    importas:
+      no-unaliased: true
+    nolintlint:
+      require-explanation: true
+      require-specific: true
+      allow-unused: false
+    varnamelen:
+      ignore-decls:
+        - T any
+        - i int
+        - wg sync.WaitGroup
+  exclusions:
+    generated: lax
+    presets:
+      - comments
+      - common-false-positives
+      - legacy
+      - std-error-handling
+    rules:
+      - linters:
+          - err113
+        text: do not define dynamic errors
+formatters:
+  enable:
+    - gci
+    - gofmt
+  exclusions:
+    generated: lax
