@@ -2,20 +2,20 @@ version: "2"
 linters:
   default: all
   disable:
-    - cyclop
-    - depguard
-    - funlen
-    - gocognit
-    - inamedparam
-    - ireturn
-    - lll
-    - maintidx
-    - mnd
-    - nlreturn
-    - nonamedreturns
-    - testpackage
-    - wrapcheck
-    - wsl
+    - cyclop            # covered by gocyclo
+    - depguard          # newer versions require explicit config to depend on anything outside of the Go stdlib
+    - funlen            # rely on code review to limit function length
+    - gocognit          # dubious "cognitive overhead" quantification
+    - inamedparam       # convention is not followed
+    - ireturn           # "accept interfaces, return structs" isn't ironclad
+    - lll               # don't want hard limits for line length
+    - maintidx          # covered by gocyclo
+    - mnd               # some unnamed constants are okay
+    - nlreturn          # generous whitespace violates house style
+    - nonamedreturns    # named returns are fine; it's *bare* returns that are bad
+    - testpackage       # internal tests are fine
+    - wrapcheck         # don't _always_ need to wrap errors
+    - wsl               # generous whitespace violates house style
   settings:
     errcheck:
       check-type-assertions: true
@@ -28,6 +28,8 @@ linters:
         - pattern: ^panic$
     godox:
       keywords:
+        # TODO, OPT, etc. comments are fine to commit. Use FIXME comments for
+        # temporary hacks, and use godox to prevent committing them.
         - FIXME
     importas:
       no-unaliased: true
@@ -49,6 +51,8 @@ linters:
       - std-error-handling
     rules:
       - linters:
+        # Don't ban use of fmt.Errorf to create new errors, but the remaining
+        # checks from err113 are useful.
           - err113
         text: do not define dynamic errors
 formatters:
