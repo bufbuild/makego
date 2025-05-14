@@ -1,4 +1,4 @@
-FROM --platform=${BUILDPLATFORM} golang:1.24.3-alpine3.21 as builder
+FROM --platform=${BUILDPLATFORM} golang:1.24.3-alpine3.21 AS builder
 
 WORKDIR /workspace
 
@@ -6,14 +6,14 @@ COPY go.mod go.sum /workspace/
 RUN go mod download
 
 COPY cmd /workspace/cmd
-COPY private /workspace/private
+COPY internal /workspace/internal
 
 ARG TARGETOS
 ARG TARGETARCH
 RUN CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} \
   go build -ldflags "-s -w" -trimpath -o /go/bin/foo ./cmd/foo
 
-FROM --platform=${TARGETPLATFORM} alpine:3.21.3
+FROM alpine:3.21.3
 
 RUN apk add --update --no-cache \
     ca-certificates \
