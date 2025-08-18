@@ -22,7 +22,7 @@ jobs:
           echo "error: version must not start with 'v'."
           exit 1
       - name: Checkout repository code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Update Buf Version
         run: make updatebufversion
       - name: Create PR
