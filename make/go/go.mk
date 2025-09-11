@@ -74,7 +74,9 @@ upgradegodeps:
 	rm -f go.mod go.sum
 	go mod init $(GO_MODULE)
 	go mod edit -go=$(GO_MOD_VERSION)
+ifneq ($(GO_MOD_TOOLCHAIN),)
 	go mod edit -toolchain=go$(GO_MOD_TOOLCHAIN)
+endif
 ifneq ($(GO_GET_PKGS),)
 	go get $(GO_GET_PKGS)
 endif
