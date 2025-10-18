@@ -5,6 +5,7 @@ linters:
     - cyclop            # covered by gocyclo
     - depguard          # newer versions require explicit config to depend on anything outside of the Go stdlib
     - funlen            # rely on code review to limit function length
+    - godoclint         # we run this separately since we use a fork
     - gocognit          # dubious "cognitive overhead" quantification
     - inamedparam       # convention is not followed
     - ireturn           # "accept interfaces, return structs" isn't ironclad
