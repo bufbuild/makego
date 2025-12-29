@@ -7,8 +7,8 @@ $(call _assert_var,CACHE_VERSIONS)
 $(call _assert_var,CACHE_BIN)
 
 # Settable
-# https://github.com/bufbuild/buf/releases 20251125 checked 20251125
-BUF_VERSION ?= v1.61.0
+# https://github.com/bufbuild/buf/releases 20251229 checked 20251229
+BUF_VERSION ?= v1.62.0
 # Settable
 #
 # If set, this path will be installed every time someone depends on $(BUF)
