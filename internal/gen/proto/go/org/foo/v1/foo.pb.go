@@ -86,9 +86,9 @@ const file_org_foo_v1_foo_proto_rawDesc = "" +
 	"\x14org/foo/v1/foo.proto\x12\n" +
 	"org.foo.v1\"\x17\n" +
 	"\x03Bar\x12\x10\n" +
-	"\x03baz\x18\x01 \x01(\tR\x03bazB\xb5\x01\n" +
+	"\x03baz\x18\x01 \x01(\tR\x03bazB\xa7\x01\n" +
 	"\x0ecom.org.foo.v1B\bFooProtoP\x01ZAgithub.com/bufbuild/makego/internal/gen/proto/go/org/foo/v1;foov1\xa2\x02\x03OFX\xaa\x02\n" +
-	"Org.Foo.V1\xba\x02\vOrg_Foo_V1_\xca\x02\n" +
+	"Org.Foo.V1\xca\x02\n" +
 	"Org\\Foo\\V1\xe2\x02\x16Org\\Foo\\V1\\GPBMetadata\xea\x02\fOrg::Foo::V1b\x06proto3"
 
 var (
