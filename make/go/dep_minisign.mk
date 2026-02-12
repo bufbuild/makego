@@ -10,12 +10,17 @@ $(call _assert_var,CACHE_BIN)
 # https://github.com/aead/minisign 20240519 checked 20240524
 MINISIGN_VERSION ?= v0.3.0
 
-MINISIGN := $(CACHE_VERSIONS)/MINISIGN/$(MINISIGN_VERSION)
+MINISIGN := $(CACHE_VERSIONS)/minisign/minisign-$(MINISIGN_VERSION)
 $(MINISIGN):
 	@rm -f $(CACHE_BIN)/minisign
-	GOBIN=$(CACHE_BIN) go install aead.dev/minisign/cmd/minisign@$(MINISIGN_VERSION)
-	@rm -rf $(dir $(MINISIGN))
-	@mkdir -p $(dir $(MINISIGN))
-	@touch $(MINISIGN)
+	@rm -rf $(dir $@)
+	@mkdir -p $(dir $@)
+	GOBIN=$(dir $@) go install aead.dev/minisign/cmd/minisign@$(MINISIGN_VERSION)
+	@mv $(dir $@)/minisign $@
+	@test -x $@
 
-deps:: $(MINISIGN)
+$(CACHE_BIN)/minisign: $(MINISIGN)
+	@mkdir -p $(dir $@)
+	ln -sf $< $@
+
+deps:: $(CACHE_BIN)/minisign

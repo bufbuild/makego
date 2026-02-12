@@ -24,16 +24,19 @@ else
 JQ_ARCH := $(UNAME_ARCH)
 endif
 
-JQ := $(CACHE_VERSIONS)/jq/$(JQ_VERSION)
+JQ := $(CACHE_VERSIONS)/jq/jq-$(JQ_VERSION)
 $(JQ):
 	@rm -f $(CACHE_BIN)/jq
-	@mkdir -p $(CACHE_BIN)
+	@rm -rf $(dir $@)
+	@mkdir -p $(dir $@)
 	curl -sSL \
 		https://github.com/jqlang/jq/releases/download/jq-$(JQ_VERSION)/jq-$(JQ_OS)-$(JQ_ARCH) \
-		-o $(CACHE_BIN)/jq
-	chmod +x $(CACHE_BIN)/jq
-	@rm -rf $(dir $(JQ))
-	@mkdir -p $(dir $(JQ))
-	@touch $(JQ)
+		-o $@
+	@chmod +x $@
+	@test -x $@
 
-dockerdeps:: $(JQ)
+$(CACHE_BIN)/jq: $(JQ)
+	@mkdir -p $(dir $@)
+	ln -sf $< $@
+
+dockerdeps:: $(CACHE_BIN)/jq
