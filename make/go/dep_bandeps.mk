@@ -12,12 +12,18 @@ $(call _assert_var,BUF_VERSION)
 # https://github.com/bufbuild/buf/releases
 BANDEPS_VERSION ?= $(BUF_VERSION)
 
-BANDEPS := $(CACHE_VERSIONS)/bandeps/$(BANDEPS_VERSION)
-$(BANDEPS):
+$(CACHE_VERSIONS)/bandeps/bandeps-$(BANDEPS_VERSION):
 	@rm -f $(CACHE_BIN)/bandeps
-	GOBIN=$(CACHE_BIN) go install github.com/bufbuild/buf/private/pkg/bandeps/cmd/bandeps@$(BANDEPS_VERSION)
-	@rm -rf $(dir $(BANDEPS))
-	@mkdir -p $(dir $(BANDEPS))
-	@touch $(BANDEPS)
+	@rm -rf $(dir $@)
+	@mkdir -p $(dir $@)
+	GOBIN=$(dir $@) go install github.com/bufbuild/buf/private/pkg/bandeps/cmd/bandeps@$(BANDEPS_VERSION)
+	@mv $(dir $@)/bandeps $@
+	@test -x $@
+
+$(CACHE_BIN)/bandeps: $(CACHE_VERSIONS)/bandeps/bandeps-$(BANDEPS_VERSION)
+	@mkdir -p $(dir $@)
+	@ln -sf $< $@
+
+BANDEPS := $(CACHE_BIN)/bandeps
 
 dockerdeps:: $(BANDEPS)

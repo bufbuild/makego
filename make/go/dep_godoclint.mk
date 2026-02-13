@@ -18,18 +18,24 @@ GODOCLINT_GO_VERSION := $(shell go list -m -f '{{.GoVersion}}' | cut -d'.' -f1-2
 # https://github.com/bufbuild/godoc-lint/commits/dev
 GODOCLINT_VERSION ?= 26c7b506fc2bf37a67fc2b42a3d9825c7ade2068
 
-GODOCLINT := $(CACHE_VERSIONS)/godoclint/$(GODOCLINT_VERSION)-go$(GODOCLINT_GO_VERSION)
-$(GODOCLINT):
+$(CACHE_VERSIONS)/godoclint/godoclint-$(GODOCLINT_VERSION)-go$(GODOCLINT_GO_VERSION):
 	@rm -f $(CACHE_BIN)/godoclint
+	@rm -rf $(dir $@)
+	@mkdir -p $(dir $@)
 	$(eval GODOCLINT_TMP := $(shell mktemp -d))
 	cd $(GODOCLINT_TMP); \
 		git clone https://github.com/bufbuild/godoc-lint && \
 		cd ./godoc-lint && \
 		git checkout $(GODOCLINT_VERSION) && \
-		GOBIN=$(CACHE_BIN) go install ./cmd/godoclint
+		GOBIN=$(dir $@) go install ./cmd/godoclint
 	@rm -rf $(GODOCLINT_TMP)
-	@rm -rf $(dir $(GODOCLINT))
-	@mkdir -p $(dir $(GODOCLINT))
-	@touch $(GODOCLINT)
+	@mv $(dir $@)/godoclint $@
+	@test -x $@
+
+$(CACHE_BIN)/godoclint: $(CACHE_VERSIONS)/godoclint/godoclint-$(GODOCLINT_VERSION)-go$(GODOCLINT_GO_VERSION)
+	@mkdir -p $(dir $@)
+	@ln -sf $< $@
+
+GODOCLINT := $(CACHE_BIN)/godoclint
 
 dockerdeps:: $(GODOCLINT)

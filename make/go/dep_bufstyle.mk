@@ -16,12 +16,18 @@ BUFSTYLE_GO_VERSION := $(shell go list -m -f '{{.GoVersion}}' | cut -d'.' -f1-2)
 # https://github.com/bufbuild/bufstyle-go/releases
 BUFSTYLE_VERSION ?= v0.5.0
 
-BUFSTYLE := $(CACHE_VERSIONS)/bufstyle/$(BUFSTYLE_VERSION)-go$(BUFSTYLE_GO_VERSION)
-$(BUFSTYLE):
+$(CACHE_VERSIONS)/bufstyle/bufstyle-$(BUFSTYLE_VERSION)-go$(BUFSTYLE_GO_VERSION):
 	@rm -f $(CACHE_BIN)/bufstyle
-	GOBIN=$(CACHE_BIN) go install buf.build/go/bufstyle@$(BUFSTYLE_VERSION)
-	@rm -rf $(dir $(BUFSTYLE))
-	@mkdir -p $(dir $(BUFSTYLE))
-	@touch $(BUFSTYLE)
+	@rm -rf $(dir $@)
+	@mkdir -p $(dir $@)
+	GOBIN=$(dir $@) go install buf.build/go/bufstyle@$(BUFSTYLE_VERSION)
+	@mv $(dir $@)/bufstyle $@
+	@test -x $@
+
+$(CACHE_BIN)/bufstyle: $(CACHE_VERSIONS)/bufstyle/bufstyle-$(BUFSTYLE_VERSION)-go$(BUFSTYLE_GO_VERSION)
+	@mkdir -p $(dir $@)
+	@ln -sf $< $@
+
+BUFSTYLE := $(CACHE_BIN)/bufstyle
 
 dockerdeps:: $(BUFSTYLE)
