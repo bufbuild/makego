@@ -13,8 +13,7 @@ CONNECT_VERSION ?= v1.19.1
 GO_GET_PKGS := $(GO_GET_PKGS) \
 	connectrpc.com/connect@$(CONNECT_VERSION)
 
-PROTOC_GEN_CONNECT_GO := $(CACHE_VERSIONS)/connect-go/protoc-gen-connect-go-$(CONNECT_VERSION)
-$(PROTOC_GEN_CONNECT_GO):
+$(CACHE_VERSIONS)/connect-go/protoc-gen-connect-go-$(CONNECT_VERSION):
 	@rm -f $(CACHE_BIN)/protoc-gen-connect-go
 	@rm -rf $(dir $@)
 	@mkdir -p $(dir $@)
@@ -22,8 +21,10 @@ $(PROTOC_GEN_CONNECT_GO):
 	@mv $(dir $@)/protoc-gen-connect-go $@
 	@test -x $@
 
-$(CACHE_BIN)/protoc-gen-connect-go: $(PROTOC_GEN_CONNECT_GO)
+$(CACHE_BIN)/protoc-gen-connect-go: $(CACHE_VERSIONS)/connect-go/protoc-gen-connect-go-$(CONNECT_VERSION)
 	@mkdir -p $(dir $@)
-	ln -sf $< $@
+	@ln -sf $< $@
 
-dockerdeps:: $(CACHE_BIN)/protoc-gen-connect-go
+PROTOC_GEN_CONNECT_GO := $(CACHE_BIN)/protoc-gen-connect-go
+
+dockerdeps:: $(PROTOC_GEN_CONNECT_GO)

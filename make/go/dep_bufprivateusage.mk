@@ -12,8 +12,7 @@ $(call _assert_var,BUF_VERSION)
 # https://github.com/bufbuild/bufprivateusage-go/releases
 BUFPRIVATEUSAGE_VERSION ?= v0.1.0
 
-BUFPRIVATEUSAGE := $(CACHE_VERSIONS)/bufprivateusage/bufprivateusage-$(BUFPRIVATEUSAGE_VERSION)
-$(BUFPRIVATEUSAGE):
+$(CACHE_VERSIONS)/bufprivateusage/bufprivateusage-$(BUFPRIVATEUSAGE_VERSION):
 	@rm -f $(CACHE_BIN)/bufprivateusage
 	@rm -rf $(dir $@)
 	@mkdir -p $(dir $@)
@@ -21,8 +20,10 @@ $(BUFPRIVATEUSAGE):
 	@mv $(dir $@)/bufprivateusage $@
 	@test -x $@
 
-$(CACHE_BIN)/bufprivateusage: $(BUFPRIVATEUSAGE)
+$(CACHE_BIN)/bufprivateusage: $(CACHE_VERSIONS)/bufprivateusage/bufprivateusage-$(BUFPRIVATEUSAGE_VERSION)
 	@mkdir -p $(dir $@)
-	ln -sf $< $@
+	@ln -sf $< $@
 
-dockerdeps:: $(CACHE_BIN)/bufprivateusage
+BUFPRIVATEUSAGE := $(CACHE_BIN)/bufprivateusage
+
+dockerdeps:: $(BUFPRIVATEUSAGE)

@@ -24,8 +24,7 @@ else
 JQ_ARCH := $(UNAME_ARCH)
 endif
 
-JQ := $(CACHE_VERSIONS)/jq/jq-$(JQ_VERSION)
-$(JQ):
+$(CACHE_VERSIONS)/jq/jq-$(JQ_VERSION):
 	@rm -f $(CACHE_BIN)/jq
 	@rm -rf $(dir $@)
 	@mkdir -p $(dir $@)
@@ -35,8 +34,10 @@ $(JQ):
 	@chmod +x $@
 	@test -x $@
 
-$(CACHE_BIN)/jq: $(JQ)
+$(CACHE_BIN)/jq: $(CACHE_VERSIONS)/jq/jq-$(JQ_VERSION)
 	@mkdir -p $(dir $@)
-	ln -sf $< $@
+	@ln -sf $< $@
 
-dockerdeps:: $(CACHE_BIN)/jq
+JQ := $(CACHE_BIN)/jq
+
+dockerdeps:: $(JQ)

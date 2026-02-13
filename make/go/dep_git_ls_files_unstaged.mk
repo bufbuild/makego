@@ -12,8 +12,7 @@ $(call _assert_var,BUF_VERSION)
 # https://github.com/bufbuild/buf/releases
 GIT_LS_FILES_UNSTAGED_VERSION ?= $(BUF_VERSION)
 
-GIT_LS_FILES_UNSTAGED := $(CACHE_VERSIONS)/git-ls-files-unstaged/git-ls-files-unstaged-$(GIT_LS_FILES_UNSTAGED_VERSION)
-$(GIT_LS_FILES_UNSTAGED):
+$(CACHE_VERSIONS)/git-ls-files-unstaged/git-ls-files-unstaged-$(GIT_LS_FILES_UNSTAGED_VERSION):
 	@rm -f $(CACHE_BIN)/git-ls-files-unstaged
 	@rm -rf $(dir $@)
 	@mkdir -p $(dir $@)
@@ -21,8 +20,10 @@ $(GIT_LS_FILES_UNSTAGED):
 	@mv $(dir $@)/git-ls-files-unstaged $@
 	@test -x $@
 
-$(CACHE_BIN)/git-ls-files-unstaged: $(GIT_LS_FILES_UNSTAGED)
+$(CACHE_BIN)/git-ls-files-unstaged: $(CACHE_VERSIONS)/git-ls-files-unstaged/git-ls-files-unstaged-$(GIT_LS_FILES_UNSTAGED_VERSION)
 	@mkdir -p $(dir $@)
-	ln -sf $< $@
+	@ln -sf $< $@
 
-dockerdeps:: $(CACHE_BIN)/git-ls-files-unstaged
+GIT_LS_FILES_UNSTAGED := $(CACHE_BIN)/git-ls-files-unstaged
+
+dockerdeps:: $(GIT_LS_FILES_UNSTAGED)

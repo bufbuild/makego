@@ -29,8 +29,7 @@ YQ_ARCH := $(UNAME_ARCH)
 endif
 
 
-YQ := $(CACHE_VERSIONS)/yq/yq-$(YQ_VERSION)
-$(YQ):
+$(CACHE_VERSIONS)/yq/yq-$(YQ_VERSION):
 	@rm -f $(CACHE_BIN)/yq
 	@rm -rf $(dir $@)
 	@mkdir -p $(dir $@)
@@ -40,6 +39,8 @@ $(YQ):
 	@chmod +x $@
 	@test -x $@
 
-$(CACHE_BIN)/yq: $(YQ)
+$(CACHE_BIN)/yq: $(CACHE_VERSIONS)/yq/yq-$(YQ_VERSION)
 	@mkdir -p $(dir $@)
-	ln -sf $< $@
+	@ln -sf $< $@
+
+YQ := $(CACHE_BIN)/yq

@@ -26,8 +26,7 @@ endif
 # https://github.com/golangci/golangci-lint/releases 20260210 checked 20260211
 GOLANGCI_LINT_VERSION ?= v2.9.0
 
-GOLANGCI_LINT := $(CACHE_VERSIONS)/golangci-lint/golangci-lint-$(GOLANGCI_LINT_VERSION)
-$(GOLANGCI_LINT):
+$(CACHE_VERSIONS)/golangci-lint/golangci-lint-$(GOLANGCI_LINT_VERSION):
 	@rm -f $(CACHE_BIN)/golangci-lint
 	@rm -rf $(dir $@)
 	@mkdir -p $(dir $@)
@@ -39,8 +38,10 @@ $(GOLANGCI_LINT):
 	@chmod +x $@
 	@test -x $@
 
-$(CACHE_BIN)/golangci-lint: $(GOLANGCI_LINT)
+$(CACHE_BIN)/golangci-lint: $(CACHE_VERSIONS)/golangci-lint/golangci-lint-$(GOLANGCI_LINT_VERSION)
 	@mkdir -p $(dir $@)
-	ln -sf $< $@
+	@ln -sf $< $@
 
-dockerdeps:: $(CACHE_BIN)/golangci-lint
+GOLANGCI_LINT := $(CACHE_BIN)/golangci-lint
+
+dockerdeps:: $(GOLANGCI_LINT)

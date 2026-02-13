@@ -12,8 +12,7 @@ $(call _assert_var,BUF_VERSION)
 # https://github.com/bufbuild/buf/releases
 BANDEPS_VERSION ?= $(BUF_VERSION)
 
-BANDEPS := $(CACHE_VERSIONS)/bandeps/bandeps-$(BANDEPS_VERSION)
-$(BANDEPS):
+$(CACHE_VERSIONS)/bandeps/bandeps-$(BANDEPS_VERSION):
 	@rm -f $(CACHE_BIN)/bandeps
 	@rm -rf $(dir $@)
 	@mkdir -p $(dir $@)
@@ -21,8 +20,10 @@ $(BANDEPS):
 	@mv $(dir $@)/bandeps $@
 	@test -x $@
 
-$(CACHE_BIN)/bandeps: $(BANDEPS)
+$(CACHE_BIN)/bandeps: $(CACHE_VERSIONS)/bandeps/bandeps-$(BANDEPS_VERSION)
 	@mkdir -p $(dir $@)
-	ln -sf $< $@
+	@ln -sf $< $@
 
-dockerdeps:: $(CACHE_BIN)/bandeps
+BANDEPS := $(CACHE_BIN)/bandeps
+
+dockerdeps:: $(BANDEPS)

@@ -12,8 +12,7 @@ $(call _assert_var,BUF_VERSION)
 # https://github.com/bufbuild/buf/releases
 LICENSE_HEADER_VERSION ?= $(BUF_VERSION)
 
-LICENSE_HEADER := $(CACHE_VERSIONS)/license-header/license-header-$(LICENSE_HEADER_VERSION)
-$(LICENSE_HEADER):
+$(CACHE_VERSIONS)/license-header/license-header-$(LICENSE_HEADER_VERSION):
 	@rm -f $(CACHE_BIN)/license-header
 	@rm -rf $(dir $@)
 	@mkdir -p $(dir $@)
@@ -21,8 +20,10 @@ $(LICENSE_HEADER):
 	@mv $(dir $@)/license-header $@
 	@test -x $@
 
-$(CACHE_BIN)/license-header: $(LICENSE_HEADER)
+$(CACHE_BIN)/license-header: $(CACHE_VERSIONS)/license-header/license-header-$(LICENSE_HEADER_VERSION)
 	@mkdir -p $(dir $@)
-	ln -sf $< $@
+	@ln -sf $< $@
 
-dockerdeps:: $(CACHE_BIN)/license-header
+LICENSE_HEADER := $(CACHE_BIN)/license-header
+
+dockerdeps:: $(LICENSE_HEADER)

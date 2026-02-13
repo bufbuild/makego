@@ -27,8 +27,7 @@ BUF := __goinstallbuf
 # Use this instead of "buf" when using buf.
 BUF_BIN := $(CACHE_GOBIN)/buf
 else
-BUF := $(CACHE_VERSIONS)/buf/buf-$(BUF_VERSION)
-$(BUF):
+$(CACHE_VERSIONS)/buf/buf-$(BUF_VERSION):
 	@rm -f $(CACHE_BIN)/buf
 	@rm -rf $(dir $@)
 	@mkdir -p $(dir $@)
@@ -36,12 +35,14 @@ $(BUF):
 	@mv $(dir $@)/buf $@
 	@test -x $@
 
-$(CACHE_BIN)/buf: $(BUF)
+$(CACHE_BIN)/buf: $(CACHE_VERSIONS)/buf/buf-$(BUF_VERSION)
 	@mkdir -p $(dir $@)
-	ln -sf $< $@
+	@ln -sf $< $@
+
+BUF := $(CACHE_BIN)/buf
 
 # Use this instead of "buf" when using buf.
 BUF_BIN := $(CACHE_BIN)/buf
 
-dockerdeps:: $(CACHE_BIN)/buf
+dockerdeps:: $(BUF)
 endif

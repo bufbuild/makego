@@ -13,8 +13,7 @@ PROTOC_GEN_GO_VERSION ?= v1.36.11
 GO_GET_PKGS := $(GO_GET_PKGS) \
 	google.golang.org/protobuf/proto@$(PROTOC_GEN_GO_VERSION)
 
-PROTOC_GEN_GO := $(CACHE_VERSIONS)/protoc-gen-go/protoc-gen-go-$(PROTOC_GEN_GO_VERSION)
-$(PROTOC_GEN_GO):
+$(CACHE_VERSIONS)/protoc-gen-go/protoc-gen-go-$(PROTOC_GEN_GO_VERSION):
 	@rm -f $(CACHE_BIN)/protoc-gen-go
 	@rm -rf $(dir $@)
 	@mkdir -p $(dir $@)
@@ -22,8 +21,10 @@ $(PROTOC_GEN_GO):
 	@mv $(dir $@)/protoc-gen-go $@
 	@test -x $@
 
-$(CACHE_BIN)/protoc-gen-go: $(PROTOC_GEN_GO)
+$(CACHE_BIN)/protoc-gen-go: $(CACHE_VERSIONS)/protoc-gen-go/protoc-gen-go-$(PROTOC_GEN_GO_VERSION)
 	@mkdir -p $(dir $@)
-	ln -sf $< $@
+	@ln -sf $< $@
 
-dockerdeps:: $(CACHE_BIN)/protoc-gen-go
+PROTOC_GEN_GO := $(CACHE_BIN)/protoc-gen-go
+
+dockerdeps:: $(PROTOC_GEN_GO)
