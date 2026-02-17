@@ -24,7 +24,7 @@ endif
 
 # Settable
 # https://github.com/golangci/golangci-lint/releases 20260217 checked 20260217
-GOLANGCI_LINT_VERSION ?= v2.10.0
+GOLANGCI_LINT_VERSION ?= v2.10.1
 
 GOLANGCI_LINT := $(CACHE_VERSIONS)/golangci-lint/$(GOLANGCI_LINT_VERSION)
 $(GOLANGCI_LINT):
