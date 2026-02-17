@@ -122,13 +122,11 @@ make upgrade
 ```
 
 Figure out the specific files you want (see "Basic Concepts" below), and only include
-those files in `make/hello/all.mk`. When you're sure you are done, run `make updatemakego`
+those files in `make/hello/all.mk`. When you're sure you are done, run `make copyfrommakego`
 to delete unnecessary files.
 
 ```bash
-# CONFIRM=1 is just for protection
-# If you later want to restore all the files, you can do so by adding ALL=1 to this command
-make updatemakego CONFIRM=1
+make copyfrommakego
 ```
 
 Then, delete everything in this readme except potentially the badge links at the top (but if
@@ -168,7 +166,7 @@ We are not documenting all development commands, however some important ones of 
 - `make cover` - Go code coverage.
 - `make install` - Install all Go binaries defined by `GO_BINS`.
 - `make dockerbuild` - Build all Docker images defined by `DOCKER_BINS`.
-- `make updatemakego` - Update from makego main.
+- `make copyfrommakego` - Update from makego main.
 
 ## Variables
 
@@ -221,10 +219,6 @@ project-specific settings and not intended to be set on the command line.
 
 These variables are meant to be set when invoking make targets on the command line.
 
-- `CONFIRM` - This is required to be set when running `make updatemakego`. This is to protect
-  against updating when not intended.
-- `ALL` - This results in all makego files being downloaded when running `make updatemakego`
-  instead of just the ones that you current have included.
 - `GOPKGS` - This controls what packages to build for Go commands. By default, this is `./...`. If
   you only wanted to test `./internal/foo/...` for example, you could run `make test GOPKGS=./internal/foo/...`
 - `COVEROPEN` - This will result in the `cover.html` file being automatically opened after `make
