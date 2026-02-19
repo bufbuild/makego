@@ -26,17 +26,22 @@ endif
 # https://github.com/golangci/golangci-lint/releases 20260217 checked 20260217
 GOLANGCI_LINT_VERSION ?= v2.10.1
 
-GOLANGCI_LINT := $(CACHE_VERSIONS)/golangci-lint/$(GOLANGCI_LINT_VERSION)
-$(GOLANGCI_LINT):
+$(CACHE_VERSIONS)/golangci-lint/golangci-lint-$(GOLANGCI_LINT_VERSION):
 	@rm -f $(CACHE_BIN)/golangci-lint
-	@mkdir -p $(CACHE_BIN)
+	@rm -rf $(dir $@)
+	@mkdir -p $(dir $@)
 	$(eval GOLANGCI_LINT_TMP := $(shell mktemp -d))
 	curl -fsSL -o $(GOLANGCI_LINT_TMP)/golangci-lint.tar.gz \
 		https://github.com/golangci/golangci-lint/releases/download/$(GOLANGCI_LINT_VERSION)/golangci-lint-$(subst v,,$(GOLANGCI_LINT_VERSION))-$(GOLANGCI_LINT_OS)-$(GOLANGCI_LINT_ARCH).tar.gz
-	cd $(GOLANGCI_LINT_TMP); tar zxf $(GOLANGCI_LINT_TMP)/golangci-lint.tar.gz --strip-components 1 && mv golangci-lint $(CACHE_BIN)/golangci-lint
+	cd $(GOLANGCI_LINT_TMP); tar zxf golangci-lint.tar.gz --strip-components 1 && mv golangci-lint $@
 	@rm -rf $(GOLANGCI_LINT_TMP)
-	@rm -rf $(dir $(GOLANGCI_LINT))
-	@mkdir -p $(dir $(GOLANGCI_LINT))
-	@touch $(GOLANGCI_LINT)
+	@chmod +x $@
+	@test -x $@
+
+$(CACHE_BIN)/golangci-lint: $(CACHE_VERSIONS)/golangci-lint/golangci-lint-$(GOLANGCI_LINT_VERSION)
+	@mkdir -p $(dir $@)
+	@ln -sf $< $@
+
+GOLANGCI_LINT := $(CACHE_BIN)/golangci-lint
 
 dockerdeps:: $(GOLANGCI_LINT)
