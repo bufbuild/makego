@@ -12,18 +12,18 @@ $(call _assert_var,BUF_VERSION)
 # https://github.com/bufbuild/bufprivateusage-go/releases
 BUFPRIVATEUSAGE_VERSION ?= v0.1.0
 
+BUFPRIVATEUSAGE := $(CACHE_BIN)/bufprivateusage
+
 $(CACHE_VERSIONS)/bufprivateusage/bufprivateusage-$(BUFPRIVATEUSAGE_VERSION):
-	@rm -f $(CACHE_BIN)/bufprivateusage
+	@rm -f $(BUFPRIVATEUSAGE)
 	@rm -rf $(dir $@)
 	@mkdir -p $(dir $@)
 	GOBIN=$(dir $@) go install buf.build/go/bufprivateusage/cmd/bufprivateusage@$(BUFPRIVATEUSAGE_VERSION)
 	@mv $(dir $@)/bufprivateusage $@
 	@test -x $@
 
-$(CACHE_BIN)/bufprivateusage: $(CACHE_VERSIONS)/bufprivateusage/bufprivateusage-$(BUFPRIVATEUSAGE_VERSION)
+$(BUFPRIVATEUSAGE): $(CACHE_VERSIONS)/bufprivateusage/bufprivateusage-$(BUFPRIVATEUSAGE_VERSION)
 	@mkdir -p $(dir $@)
 	@ln -sf $< $@
-
-BUFPRIVATEUSAGE := $(CACHE_BIN)/bufprivateusage
 
 dockerdeps:: $(BUFPRIVATEUSAGE)

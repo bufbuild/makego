@@ -16,18 +16,18 @@ GOVULNCHECK_GO_VERSION := $(shell go env GOVERSION | sed 's/^go//' | cut -d'.' -
 # https://pkg.go.dev/golang.org/x/vuln/cmd/govulncheck 20250106 checked 20250212
 GOVULNCHECK_VERSION ?= v1.1.4
 
+GOVULNCHECK := $(CACHE_BIN)/govulncheck
+
 $(CACHE_VERSIONS)/govulncheck/govulncheck-$(GOVULNCHECK_VERSION)-go$(GOVULNCHECK_GO_VERSION):
-	@rm -f $(CACHE_BIN)/govulncheck
+	@rm -f $(GOVULNCHECK)
 	@rm -rf $(dir $@)
 	@mkdir -p $(dir $@)
 	GOBIN=$(dir $@) go install golang.org/x/vuln/cmd/govulncheck@$(GOVULNCHECK_VERSION)
 	@mv $(dir $@)/govulncheck $@
 	@test -x $@
 
-$(CACHE_BIN)/govulncheck: $(CACHE_VERSIONS)/govulncheck/govulncheck-$(GOVULNCHECK_VERSION)-go$(GOVULNCHECK_GO_VERSION)
+$(GOVULNCHECK): $(CACHE_VERSIONS)/govulncheck/govulncheck-$(GOVULNCHECK_VERSION)-go$(GOVULNCHECK_GO_VERSION)
 	@mkdir -p $(dir $@)
 	@ln -sf $< $@
-
-GOVULNCHECK := $(CACHE_BIN)/govulncheck
 
 dockerdeps:: $(GOVULNCHECK)

@@ -12,18 +12,18 @@ $(call _assert_var,BUF_VERSION)
 # https://github.com/bufbuild/buf/releases
 GIT_LS_FILES_UNSTAGED_VERSION ?= $(BUF_VERSION)
 
+GIT_LS_FILES_UNSTAGED := $(CACHE_BIN)/git-ls-files-unstaged
+
 $(CACHE_VERSIONS)/git-ls-files-unstaged/git-ls-files-unstaged-$(GIT_LS_FILES_UNSTAGED_VERSION):
-	@rm -f $(CACHE_BIN)/git-ls-files-unstaged
+	@rm -f $(GIT_LS_FILES_UNSTAGED)
 	@rm -rf $(dir $@)
 	@mkdir -p $(dir $@)
 	GOBIN=$(dir $@) go install github.com/bufbuild/buf/private/pkg/git/cmd/git-ls-files-unstaged@$(GIT_LS_FILES_UNSTAGED_VERSION)
 	@mv $(dir $@)/git-ls-files-unstaged $@
 	@test -x $@
 
-$(CACHE_BIN)/git-ls-files-unstaged: $(CACHE_VERSIONS)/git-ls-files-unstaged/git-ls-files-unstaged-$(GIT_LS_FILES_UNSTAGED_VERSION)
+$(GIT_LS_FILES_UNSTAGED): $(CACHE_VERSIONS)/git-ls-files-unstaged/git-ls-files-unstaged-$(GIT_LS_FILES_UNSTAGED_VERSION)
 	@mkdir -p $(dir $@)
 	@ln -sf $< $@
-
-GIT_LS_FILES_UNSTAGED := $(CACHE_BIN)/git-ls-files-unstaged
 
 dockerdeps:: $(GIT_LS_FILES_UNSTAGED)

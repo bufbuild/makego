@@ -35,11 +35,14 @@ PROTOC_OS = linux
 PROTOC_ARCH := $(UNAME_ARCH)
 endif
 
+PROTOC := $(CACHE_BIN)/protoc
+PROTOC_INCLUDE := $(CACHE_INCLUDE)/google
+
 $(CACHE_VERSIONS)/protoc/protoc-$(PROTOC_VERSION):
 	@if ! command -v curl >/dev/null 2>/dev/null; then echo "error: curl must be installed"  >&2; exit 1; fi
 	@if ! command -v unzip >/dev/null 2>/dev/null; then echo "error: unzip must be installed"  >&2; exit 1; fi
-	@rm -f $(CACHE_BIN)/protoc
-	@rm -rf $(CACHE_INCLUDE)/google
+	@rm -f $(PROTOC)
+	@rm -rf $(PROTOC_INCLUDE)
 	@rm -rf $(dir $@)
 	@mkdir -p $(dir $@)
 	@mkdir -p $(CACHE_VERSIONS)/protoc/protoc-$(PROTOC_VERSION)-include
@@ -50,15 +53,12 @@ $(CACHE_VERSIONS)/protoc/protoc-$(PROTOC_VERSION):
 	@chmod +x $@
 	@test -x $@
 
-$(CACHE_BIN)/protoc: $(CACHE_VERSIONS)/protoc/protoc-$(PROTOC_VERSION)
+$(PROTOC): $(CACHE_VERSIONS)/protoc/protoc-$(PROTOC_VERSION)
 	@mkdir -p $(dir $@)
 	@ln -sf $< $@
 
-$(CACHE_INCLUDE)/google: $(CACHE_VERSIONS)/protoc/protoc-$(PROTOC_VERSION)
+$(PROTOC_INCLUDE): $(CACHE_VERSIONS)/protoc/protoc-$(PROTOC_VERSION)
 	@mkdir -p $(dir $@)
 	@ln -sf $(CACHE_VERSIONS)/protoc/protoc-$(PROTOC_VERSION)-include/google $@
-
-PROTOC := $(CACHE_BIN)/protoc
-PROTOC_INCLUDE := $(CACHE_INCLUDE)/google
 
 dockerdeps:: $(PROTOC) $(PROTOC_INCLUDE)
