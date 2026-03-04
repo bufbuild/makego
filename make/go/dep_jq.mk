@@ -35,6 +35,7 @@ $(CACHE_VERSIONS)/jq/jq-$(JQ_VERSION):
 		-o $@
 	@chmod +x $@
 	@test -x $@
+	@touch $@
 
 $(JQ): $(CACHE_VERSIONS)/jq/jq-$(JQ_VERSION)
 	@mkdir -p $(dir $@)

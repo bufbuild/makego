@@ -39,6 +39,7 @@ $(CACHE_VERSIONS)/golangci-lint/golangci-lint-$(GOLANGCI_LINT_VERSION):
 	@rm -rf $(GOLANGCI_LINT_TMP)
 	@chmod +x $@
 	@test -x $@
+	@touch $@
 
 $(GOLANGCI_LINT): $(CACHE_VERSIONS)/golangci-lint/golangci-lint-$(GOLANGCI_LINT_VERSION)
 	@mkdir -p $(dir $@)

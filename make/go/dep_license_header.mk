@@ -21,6 +21,7 @@ $(CACHE_VERSIONS)/license-header/license-header-$(LICENSE_HEADER_VERSION):
 	GOBIN=$(dir $@) go install github.com/bufbuild/buf/private/pkg/licenseheader/cmd/license-header@$(LICENSE_HEADER_VERSION)
 	@mv $(dir $@)/license-header $@
 	@test -x $@
+	@touch $@
 
 $(LICENSE_HEADER): $(CACHE_VERSIONS)/license-header/license-header-$(LICENSE_HEADER_VERSION)
 	@mkdir -p $(dir $@)

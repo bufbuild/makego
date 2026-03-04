@@ -21,6 +21,7 @@ $(CACHE_VERSIONS)/git-ls-files-unstaged/git-ls-files-unstaged-$(GIT_LS_FILES_UNS
 	GOBIN=$(dir $@) go install github.com/bufbuild/buf/private/pkg/git/cmd/git-ls-files-unstaged@$(GIT_LS_FILES_UNSTAGED_VERSION)
 	@mv $(dir $@)/git-ls-files-unstaged $@
 	@test -x $@
+	@touch $@
 
 $(GIT_LS_FILES_UNSTAGED): $(CACHE_VERSIONS)/git-ls-files-unstaged/git-ls-files-unstaged-$(GIT_LS_FILES_UNSTAGED_VERSION)
 	@mkdir -p $(dir $@)

@@ -52,6 +52,7 @@ $(CACHE_VERSIONS)/protoc/protoc-$(PROTOC_VERSION):
 	@rm -rf $(PROTOC_TMP)
 	@chmod +x $@
 	@test -x $@
+	@touch $@
 
 $(PROTOC): $(CACHE_VERSIONS)/protoc/protoc-$(PROTOC_VERSION)
 	@mkdir -p $(dir $@)

@@ -21,6 +21,7 @@ $(CACHE_VERSIONS)/bufprivateusage/bufprivateusage-$(BUFPRIVATEUSAGE_VERSION):
 	GOBIN=$(dir $@) go install buf.build/go/bufprivateusage/cmd/bufprivateusage@$(BUFPRIVATEUSAGE_VERSION)
 	@mv $(dir $@)/bufprivateusage $@
 	@test -x $@
+	@touch $@
 
 $(BUFPRIVATEUSAGE): $(CACHE_VERSIONS)/bufprivateusage/bufprivateusage-$(BUFPRIVATEUSAGE_VERSION)
 	@mkdir -p $(dir $@)

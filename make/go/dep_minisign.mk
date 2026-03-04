@@ -19,6 +19,7 @@ $(CACHE_VERSIONS)/minisign/minisign-$(MINISIGN_VERSION):
 	GOBIN=$(dir $@) go install aead.dev/minisign/cmd/minisign@$(MINISIGN_VERSION)
 	@mv $(dir $@)/minisign $@
 	@test -x $@
+	@touch $@
 
 $(MINISIGN): $(CACHE_VERSIONS)/minisign/minisign-$(MINISIGN_VERSION)
 	@mkdir -p $(dir $@)

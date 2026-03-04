@@ -39,6 +39,7 @@ $(CACHE_VERSIONS)/buf/buf-$(BUF_VERSION):
 	GOBIN=$(dir $@) go install github.com/bufbuild/buf/cmd/buf@$(BUF_VERSION)
 	@mv $(dir $@)/buf $@
 	@test -x $@
+	@touch $@
 
 $(BUF): $(CACHE_VERSIONS)/buf/buf-$(BUF_VERSION)
 	@mkdir -p $(dir $@)

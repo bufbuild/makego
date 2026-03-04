@@ -21,6 +21,7 @@ $(CACHE_VERSIONS)/bandeps/bandeps-$(BANDEPS_VERSION):
 	GOBIN=$(dir $@) go install github.com/bufbuild/buf/private/pkg/bandeps/cmd/bandeps@$(BANDEPS_VERSION)
 	@mv $(dir $@)/bandeps $@
 	@test -x $@
+	@touch $@
 
 $(BANDEPS): $(CACHE_VERSIONS)/bandeps/bandeps-$(BANDEPS_VERSION)
 	@mkdir -p $(dir $@)
