@@ -22,6 +22,7 @@ $(CACHE_VERSIONS)/protoc-gen-go/protoc-gen-go-$(PROTOC_GEN_GO_VERSION):
 	GOBIN=$(dir $@) go install google.golang.org/protobuf/cmd/protoc-gen-go@$(PROTOC_GEN_GO_VERSION)
 	@mv $(dir $@)/protoc-gen-go $@
 	@test -x $@
+	@touch $@
 
 $(PROTOC_GEN_GO): $(CACHE_VERSIONS)/protoc-gen-go/protoc-gen-go-$(PROTOC_GEN_GO_VERSION)
 	@mkdir -p $(dir $@)

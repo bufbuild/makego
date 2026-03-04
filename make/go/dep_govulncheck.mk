@@ -25,6 +25,7 @@ $(CACHE_VERSIONS)/govulncheck/govulncheck-$(GOVULNCHECK_VERSION)-go$(GOVULNCHECK
 	GOBIN=$(dir $@) go install golang.org/x/vuln/cmd/govulncheck@$(GOVULNCHECK_VERSION)
 	@mv $(dir $@)/govulncheck $@
 	@test -x $@
+	@touch $@
 
 $(GOVULNCHECK): $(CACHE_VERSIONS)/govulncheck/govulncheck-$(GOVULNCHECK_VERSION)-go$(GOVULNCHECK_GO_VERSION)
 	@mkdir -p $(dir $@)

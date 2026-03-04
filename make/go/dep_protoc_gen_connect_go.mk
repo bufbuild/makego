@@ -22,6 +22,7 @@ $(CACHE_VERSIONS)/connect-go/protoc-gen-connect-go-$(CONNECT_VERSION):
 	GOBIN=$(dir $@) go install connectrpc.com/connect/cmd/protoc-gen-connect-go@$(CONNECT_VERSION)
 	@mv $(dir $@)/protoc-gen-connect-go $@
 	@test -x $@
+	@touch $@
 
 $(PROTOC_GEN_CONNECT_GO): $(CACHE_VERSIONS)/connect-go/protoc-gen-connect-go-$(CONNECT_VERSION)
 	@mkdir -p $(dir $@)

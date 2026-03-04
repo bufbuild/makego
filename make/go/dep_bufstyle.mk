@@ -25,6 +25,7 @@ $(CACHE_VERSIONS)/bufstyle/bufstyle-$(BUFSTYLE_VERSION)-go$(BUFSTYLE_GO_VERSION)
 	GOBIN=$(dir $@) go install buf.build/go/bufstyle@$(BUFSTYLE_VERSION)
 	@mv $(dir $@)/bufstyle $@
 	@test -x $@
+	@touch $@
 
 $(BUFSTYLE): $(CACHE_VERSIONS)/bufstyle/bufstyle-$(BUFSTYLE_VERSION)-go$(BUFSTYLE_GO_VERSION)
 	@mkdir -p $(dir $@)

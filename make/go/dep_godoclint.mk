@@ -33,6 +33,7 @@ $(CACHE_VERSIONS)/godoclint/godoclint-$(GODOCLINT_VERSION)-go$(GODOCLINT_GO_VERS
 	@rm -rf $(GODOCLINT_TMP)
 	@mv $(dir $@)/godoclint $@
 	@test -x $@
+	@touch $@
 
 $(GODOCLINT): $(CACHE_VERSIONS)/godoclint/godoclint-$(GODOCLINT_VERSION)-go$(GODOCLINT_GO_VERSION)
 	@mkdir -p $(dir $@)

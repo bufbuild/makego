@@ -40,6 +40,7 @@ $(CACHE_VERSIONS)/yq/yq-$(YQ_VERSION):
 		-o $@
 	@chmod +x $@
 	@test -x $@
+	@touch $@
 
 $(YQ): $(CACHE_VERSIONS)/yq/yq-$(YQ_VERSION)
 	@mkdir -p $(dir $@)
