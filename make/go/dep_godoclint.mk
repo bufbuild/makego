@@ -9,8 +9,16 @@ $(call _assert_var,CACHE_BIN)
 $(call _assert_var,BUF_VERSION)
 
 # We want to ensure we rebuild godoclint every time we require a new Go minor version.
-# Otherwise, the cached version may not support the latest language features.
-GODOCLINT_GO_VERSION := $(shell go list -m -f '{{.GoVersion}}' | cut -d'.' -f1-2)
+# Otherwise, the cached version may not support the latest language features. We need
+# a full toolchain version to rebuild.
+GODOCLINT_GOTOOLCHAIN_VERSION := $(shell go list -m -f '{{.GoVersion}}'  | cut -d'.' -f1-3)
+GODOCLINT_GO_VERSION := $(shell echo $(GODOCLINT_GOTOOLCHAIN_VERSION) | cut -d'.' -f1-2)
+
+ifeq (1,$(shell echo $(GODOCLINT_GOTOOLCHAIN_VERSION) | grep -o '\.' | wc -l | sed 's/^[[:blank:]]*//'))
+# above GoVersion only indicates a minor version. But a toolchain version
+# needs to indicate a particular release, so assume point release of zero.
+GODOCLINT_GOTOOLCHAIN_VERSION := $(GODOCLINT_GOTOOLCHAIN_VERSION).0
+endif
 
 # Settable
 #
@@ -29,7 +37,7 @@ $(CACHE_VERSIONS)/godoclint/godoclint-$(GODOCLINT_VERSION)-go$(GODOCLINT_GO_VERS
 		git clone https://github.com/bufbuild/godoc-lint && \
 		cd ./godoc-lint && \
 		git checkout $(GODOCLINT_VERSION) && \
-		GOBIN=$(dir $@) go install ./cmd/godoclint
+		GOBIN=$(dir $@) GOTOOLCHAIN=go$(GODOCLINT_GOTOOLCHAIN_VERSION) go install ./cmd/godoclint
 	@rm -rf $(GODOCLINT_TMP)
 	@mv $(dir $@)/godoclint $@
 	@test -x $@
