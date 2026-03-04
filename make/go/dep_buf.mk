@@ -27,16 +27,22 @@ BUF := __goinstallbuf
 # Use this instead of "buf" when using buf.
 BUF_BIN := $(CACHE_GOBIN)/buf
 else
-BUF := $(CACHE_VERSIONS)/buf/$(BUF_VERSION)
-$(BUF):
-	@rm -f $(CACHE_BIN)/buf
-	GOBIN=$(CACHE_BIN) go install github.com/bufbuild/buf/cmd/buf@$(BUF_VERSION)
-	@rm -rf $(dir $(BUF))
-	@mkdir -p $(dir $(BUF))
-	@touch $(BUF)
+BUF := $(CACHE_BIN)/buf
 
 # Use this instead of "buf" when using buf.
-BUF_BIN := $(CACHE_BIN)/buf
+BUF_BIN := $(BUF)
+
+$(CACHE_VERSIONS)/buf/buf-$(BUF_VERSION):
+	@rm -f $(BUF)
+	@rm -rf $(dir $@)
+	@mkdir -p $(dir $@)
+	GOBIN=$(dir $@) go install github.com/bufbuild/buf/cmd/buf@$(BUF_VERSION)
+	@mv $(dir $@)/buf $@
+	@test -x $@
+
+$(BUF): $(CACHE_VERSIONS)/buf/buf-$(BUF_VERSION)
+	@mkdir -p $(dir $@)
+	@ln -sf $< $@
 
 dockerdeps:: $(BUF)
 endif
