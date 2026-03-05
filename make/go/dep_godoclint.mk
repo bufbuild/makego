@@ -9,16 +9,11 @@ $(call _assert_var,CACHE_BIN)
 $(call _assert_var,BUF_VERSION)
 
 # We want to ensure we rebuild godoclint every time we require a new Go minor version.
-# Otherwise, the cached version may not support the latest language features. We need
-# a full toolchain version to rebuild.
-GODOCLINT_GOTOOLCHAIN_VERSION := $(shell go list -m -f '{{.GoVersion}}'  | cut -d'.' -f1-3)
+# Otherwise, the cached version may not support the latest language features.
+# This version is the go toolchain version (which may be more specific than the module
+# version) to ensure the build handles specific language features in newer toolchains.
+GODOCLINT_GOTOOLCHAIN_VERSION := $(shell go env GOVERSION | sed 's/^go//')
 GODOCLINT_GO_VERSION := $(shell echo $(GODOCLINT_GOTOOLCHAIN_VERSION) | cut -d'.' -f1-2)
-
-ifeq (1,$(shell echo $(GODOCLINT_GOTOOLCHAIN_VERSION) | grep -o '\.' | wc -l | sed 's/^[[:blank:]]*//'))
-# above GoVersion only indicates a minor version. But a toolchain version
-# needs to indicate a particular release, so assume point release of zero.
-GODOCLINT_GOTOOLCHAIN_VERSION := $(GODOCLINT_GOTOOLCHAIN_VERSION).0
-endif
 
 # Settable
 #
