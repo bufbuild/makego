@@ -23,8 +23,8 @@ GOLANGCI_LINT_ARCH := $(UNAME_ARCH)
 endif
 
 # Settable
-# https://github.com/golangci/golangci-lint/releases 20260217 checked 20260217
-GOLANGCI_LINT_VERSION ?= v2.10.1
+# https://github.com/golangci/golangci-lint/releases 20260322 checked 20260323
+GOLANGCI_LINT_VERSION ?= v2.11.4
 
 GOLANGCI_LINT := $(CACHE_BIN)/golangci-lint
 
