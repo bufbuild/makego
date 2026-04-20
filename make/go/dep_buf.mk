@@ -20,7 +20,7 @@ BUF_GO_INSTALL_PATH ?=
 ifneq ($(BUF_GO_INSTALL_PATH),)
 .PHONY: __goinstallbuf
 __goinstallbuf:
-	go install $(BUF_GO_INSTALL_PATH)
+	go install $(GO_INSTALL_EXTRA_FLAGS) $(BUF_GO_INSTALL_PATH)
 
 BUF := __goinstallbuf
 
