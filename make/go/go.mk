@@ -87,6 +87,9 @@ ci:
 	@$(MAKE) lint
 	@$(MAKE) test
 
+.PHONY: preupgradegodeps
+preupgradegodeps::
+
 .PHONY: postupgradegodeps
 postupgradegodeps::
 
@@ -98,6 +101,7 @@ upgradegodeps:
 ifneq ($(GO_MOD_TOOLCHAIN),)
 	go mod edit -toolchain=go$(GO_MOD_TOOLCHAIN)
 endif
+	@$(MAKE) preupgradegodeps
 ifneq ($(GO_GET_PKGS),)
 	go get $(GO_GET_PKGS)
 endif
