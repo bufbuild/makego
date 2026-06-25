@@ -176,8 +176,12 @@ endif
 
 .PHONY: govulncheck
 govulncheck: $(GOVULNCHECK)
+ifneq ($(SKIP_GOVULNCHECK),)
+	@echo Skipping govulncheck...
+else
 	@echo govulncheck GOPKGS
 	@govulncheck $(GOPKGS)
+endif
 
 .PHONY: postlint
 postlint::
