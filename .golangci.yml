@@ -7,6 +7,7 @@ linters:
     - funlen            # rely on code review to limit function length
     - godoclint         # we run this separately since we use a fork
     - gocognit          # dubious "cognitive overhead" quantification
+    - gomodguard        # replaced by gomodguard_v2
     - inamedparam       # convention is not followed
     - ireturn           # "accept interfaces, return structs" isn't ironclad
     - lll               # don't want hard limits for line length
