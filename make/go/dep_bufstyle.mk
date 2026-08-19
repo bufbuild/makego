@@ -13,8 +13,10 @@ $(call _assert_var,BUF_VERSION)
 BUFSTYLE_GO_VERSION := $(call _major_minor,$(shell go list -m -f '{{.GoVersion}}'))
 
 # Settable
-# https://github.com/bufbuild/bufstyle-go/releases
-BUFSTYLE_VERSION ?= v0.5.0
+#
+# Based off of main branch, pending a release including golang.org/x/tools v0.49.0.
+# https://github.com/bufbuild/bufstyle-go/commits/main
+BUFSTYLE_VERSION ?= ce18c4427ccee4b402ecf98dd7996b3e3b98a320
 
 BUFSTYLE := $(CACHE_BIN)/bufstyle
 
