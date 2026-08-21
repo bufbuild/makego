@@ -16,9 +16,7 @@ GO_GET_PKGS := $(GO_GET_PKGS) \
 
 PROTOC_GEN_GO := $(CACHE_BIN)/protoc-gen-go
 
-# The cache key includes GO_VERSION: protoc-gen-go formats its output with go/format, so
-# the code it generates depends on the toolchain that built it, and we want to rebuild the
-# plugin whenever that toolchain changes.
+# Keyed by GO_VERSION: the plugin formats its output with go/format
 $(CACHE_VERSIONS)/protoc-gen-go/protoc-gen-go-$(PROTOC_GEN_GO_VERSION)-go$(GO_VERSION):
 	@rm -f $(PROTOC_GEN_GO)
 	@rm -rf $(dir $@)
